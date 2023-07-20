@@ -39,8 +39,8 @@ function Header({ setIsAdding, handleRoleFilter }) {
         <label htmlFor="roleFilter" style={selectLabelStyle}>Filter By Role:</label>
         <select id="roleFilter" value={roleFilter} onChange={handleRoleFilterChange}>
           <option value="All">All</option>
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
         </select>
       </div>
       {/* Pagination component can be added here */}

@@ -1,52 +1,52 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 function Add({ employees, setEmployees, setIsAdding }) {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [date, setDate] = useState('');
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [salary, setSalary] = useState('');
-    const [date, setDate] = useState('');
+  const textInput = useRef(null);
 
-    const textInput = useRef(null);
+  useEffect(() => {
+    textInput.current.focus();
+  }, []);
 
-    useEffect(() => {
-        textInput.current.focus();
-    }, [])
-
-    const handleAdd = e => {
-        e.preventDefault();
-        if (!firstName || !lastName || !email || !salary || !date) {
-            return Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'All fields are required.',
-                showConfirmButton: true
-            });
-        }
-
-        const id = employees.length + 1;
-        const newEmployee = {
-            id,
-            firstName,
-            lastName,
-            email,
-            salary,
-            date
-        }
-        employees.push(newEmployee);
-        setEmployees(employees);
-        setIsAdding(false);
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Added!',
-            text: `${firstName} ${lastName}'s data has been Added.`,
-            showConfirmButton: false,
-            timer: 1500
-        });
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (!firstName || !lastName || !email || !date) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'All fields are required.',
+        showConfirmButton: true,
+      });
     }
+
+    const id = employees.length + 1;
+    const newEmployee = {
+      id,
+      firstname: firstName,
+      lastname: lastName,
+      email,
+      date_of_join: date,
+    };
+    
+    console.log('Inserted Employee Data:', newEmployee); // Log the inserted data to the console
+
+    employees.push(newEmployee);
+    setEmployees(employees);
+    setIsAdding(false);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Added!',
+      text: `${firstName} ${lastName}'s data has been Added.`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
 
 
     return (
@@ -77,14 +77,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
                     name="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                />
-                <label htmlFor="salary">Salary ($)</label>
-                <input
-                    id="salary"
-                    type="number"
-                    name="salary"
-                    value={salary}
-                    onChange={e => setSalary(e.target.value)}
                 />
                 <label htmlFor="date">Date</label>
                 <input
