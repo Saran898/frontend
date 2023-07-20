@@ -9,17 +9,17 @@ import {
 
 const Navigation = () => {
   return (
-    <div className="main-container">
+    <div className="sidebar">
         <nav className="left-side-nav">
           <ul>
             <li>
-              <NavLink exact to="/" activeClassName="active">
+              <NavLink to="/" className="active">
               <FontAwesomeIcon icon={faUser} className="sidebar-icon" />
                 Role
               </NavLink>
             </li>
            <li>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/employee" className="active">
               <FontAwesomeIcon icon={faUsers} className="sidebar-icon" />
                 Employee
               </NavLink>

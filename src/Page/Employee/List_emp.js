@@ -1,7 +1,6 @@
 import React,  {useState } from 'react'
-
-function List({ employees, handleEdit}) {
-
+function List({ employees, handleEdit, handleDelete }) {
+    
     const [isActive, setIsActive] = useState(true);
 
   const handleToggle = () => {
@@ -41,11 +40,19 @@ function List({ employees, handleEdit}) {
                                 <td>{formatter.format(employee.salary)}</td>
                                 <td>{employee.date} </td>
                                 <td className="text-right">
-                                <button
+                                    <button
                                         onClick={() => handleEdit(employee.id)}
                                         className="button muted-button"
                                     >
                                         Edit
+                                    </button>
+                                </td>
+                                <td className="text-left">
+                                    <button
+                                        onClick={() => handleDelete(employee.id)}
+                                        className="button muted-button"
+                                    >
+                                        Delete
                                     </button>
                                 </td>
                                 <td className="text-left">

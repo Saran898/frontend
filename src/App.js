@@ -1,37 +1,27 @@
-// import './App.css';
-// import Dashboard from './Page/Dashboard';
-
-// function App() {
-//   return (
-//     <div>
-//       <Dashboard />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './Navigation';
-import Dashboard from './Page/Dashboard';
+import Role from './Page/Role';
 import Employee  from './Page/Employee';
 import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="app-container">
-        <header className="top-nav">
-          <h1>Employee Management System</h1>
-        </header>
-        <div className='main-container2 '>
+      <div className="outer-main-div">
+        <div className="outer-nav">
+          <div>
+            <div className="main-nav">
+            <h1>Employee Management System</h1>
+            </div>
+          </div>
+        </div>
+        <div className='main-non-nav '>
           <Navigation />
-          <div className="content-container">
+          <div className="main-area">
             <Routes>
-              <Route path="/" element={<Dashboard />} /> 
-              <Route path="/ " element={<Employee  />} />
+              <Route path="/" element={<Role />} /> 
+              <Route path="/employee" element={<Employee  />} />
             </Routes>
           </div>
         </div>

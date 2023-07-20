@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 
-import Header from '../Employee/Header';
-import List from '../Employee/List';
-import Add from '../Employee/Add';
-import Edit from '../Employee/Edit';
+import Header from './Header_emp';
+import List from './List_emp';
+import Add from './Add_emp';
+import Edit from './Edit_emp';
 
 import { employeeData } from '../../data';
 

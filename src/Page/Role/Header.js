@@ -14,22 +14,23 @@ function Header({ setIsAdding, handleRoleFilter }) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: '18px',
+    marginTop: '-11px',
   };
 
   const selectContainerStyle = {
     display: 'flex',
     alignItems: 'center',
-    width: '36%',
+    width: '28%',
   };
 
   const selectLabelStyle = {
     marginRight: '8px',
+    width:'72%',
   };
 
   return (
     <header >
-      <h1>Role Management</h1>
+      <h2>Role Management</h2>
       <div style={headerStyle}>
       <div>
         <button onClick={() => setIsAdding(true)} className='round-button'>Add Button</button>

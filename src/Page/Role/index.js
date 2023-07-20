@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 
-import Header from '../Dashboard/Header';
-import List from '../Dashboard/List';
-import Add from '../Dashboard/Add';
-import Edit from '../Dashboard/Edit';
+import Header from './Header';
+import List from './List';
+import Add from './Add';
+import Edit from './Edit';
 
 import { employeeData } from '../../data';
 
-function Dashboard() {
+function Role() {
 
     const [employees, setEmployees] = useState(employeeData);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -84,4 +84,4 @@ function Dashboard() {
     )
 }
 
-export default Dashboard;
+export default Role;
