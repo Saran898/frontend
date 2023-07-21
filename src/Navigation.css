@@ -12,8 +12,8 @@ body {
   font-size: 21px;
   width: 1.25em
 }
-
-  .left-side-nav {
+/* Left Side Navigation Bar */
+.left-side-nav {
  
     margin-left: 8px;
     margin-top: 78px;
@@ -32,15 +32,16 @@ body {
   font-size: 1.2rem;
 }
 
-.sidebar {
-  -webkit-transition: all .1s linear;
-  transition: all .1s linear;
-  /* background-color: #2C8A7A; */
-  background-color:#404e67;
-  width: 190px;
-  height: 100%;
-  float: left;
-  overflow: auto;
+.left-side-nav a:hover {
+  background-color: #555;
+}
+
+/* Main Content Container */
+.main-container2 {
+  display: flex;
+}
+.main-container {
+  background-color: #404e67;
 }
 
 .main-content {

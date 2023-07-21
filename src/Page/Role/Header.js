@@ -30,7 +30,7 @@ function Header({ setIsAdding, handleRoleFilter }) {
 
   return (
     <header >
-      <h1>Role Management</h1>
+      <h2>Role Management</h2>
       <div style={headerStyle}>
       <div>
         <button onClick={() => setIsAdding(true)} className='round-button'>Add Button</button>
