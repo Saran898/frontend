@@ -1,90 +1,83 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 
 function Add({ employees, setEmployees, setIsAdding }) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [date, setDate] = useState('');
 
-  const textInput = useRef(null);
-
-  useEffect(() => {
-    textInput.current.focus();
-  }, []);
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    if (!firstName || !lastName || !email || !date) {
-      return Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'All fields are required.',
-        showConfirmButton: true,
-      });
-    }
-
-    const id = employees.length + 1;
-    const newEmployee = {
-      id,
-      firstname: firstName,
-      lastname: lastName,
-      email,
-      date_of_join: date,
-    };
     
-    console.log('Inserted Employee Data:', newEmployee); // Log the inserted data to the console
+  const [roleName, setRoleName] = useState('');
+    const [deptName, setDeptName] = useState('');
+    const [departments, setDepartments] = useState([]);
 
-    employees.push(newEmployee);
-    setEmployees(employees);
-    setIsAdding(false);
+    useEffect(() => {
+        fetch('http://192.168.11.150:4000/roles')
+          .then((response) => response.json())
+          .then((data) => {
+            // Extract unique department names from the data fetched from the API
+            const uniqueDepartments = [...new Set(data.map((role) => role.dept_name))];
+            // Set the unique department names to the state
+            setDepartments(uniqueDepartments);
+            // Set the selectedEmployee data to initialize the state
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Added!',
-      text: `${firstName} ${lastName}'s data has been Added.`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
+          })
+          .catch((error) => console.error('Error fetching data:', error));
+      }, []);
 
+    const handleAdd = e => {
+        e.preventDefault();
+        if (!deptName || !roleName) {
+            return Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'All fields are required.',
+                showConfirmButton: true
+            });
+        }
+
+        const id = employees.length + 1;
+        const newEmployee = {
+            id,
+            deptName,
+            roleName,
+        }
+        employees.push(newEmployee);
+        setEmployees(employees);
+        setIsAdding(false);
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Added!',
+            text: ` ${roleName}'s data has been Added.`,
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+  
 
     return (
         <div className="small-container">
             <form onSubmit={handleAdd}>
-                <h1>Add Employee</h1>
-                <label htmlFor="firstName">First Name</label>
+                <h1>Add Role</h1>
+                <label htmlFor="firstName">Department</label>
+                        <select
+          id="deptName"
+          name="deptName"
+          value={deptName}
+          onChange={(e) => setDeptName(e.target.value)}
+        >
+          <option value="">Select Department</option>
+          {departments.map((role) => (
+            <option key={role} value={role}>
+              {role}
+            </option>
+          ))}
+        </select>
+                <label htmlFor="roleName">Role</label>
                 <input
-                    id="firstName"
+                    id="roleName"
                     type="text"
-                    ref={textInput}
-                    name="firstName"
-                    value={firstName}
-                    onChange={e => setFirstName(e.target.value)}
-                />
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                    id="lastName"
-                    type="text"
-                    name="lastName"
-                    value={lastName}
-                    onChange={e => setLastName(e.target.value)}
-                />
-                <label htmlFor="email">Email</label>
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                />
-                <label htmlFor="date">Date</label>
-                <input
-                    id="date"
-                    type="date"
-                    name="date"
-                    value={date}
-                    onChange={e => setDate(e.target.value)}
+                    name="roleName"
+                    value={roleName}
+                    onChange={e => setRoleName(e.target.value)}
                 />
                 <div style={{ marginTop: '30px' }}>
                     <input type="submit" value="Add" />
