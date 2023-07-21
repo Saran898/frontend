@@ -1,56 +1,50 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-function Edit({ employees, selectedEmployee, setEmployees, setIsEditing }) {
+function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
+  const id = selectedEmployee._id; // Use _id from the selectedEmployee object
 
-    const id = selectedEmployee.id;
+  const [firstName, setFirstName] = useState(selectedEmployee.firstname);
+  const [lastName, setLastName] = useState(selectedEmployee.lastname);
+  const [email, setEmail] = useState(selectedEmployee.email);
+  const [date, setDate] = useState(selectedEmployee.date_of_join);
 
-    const [firstName, setFirstName] = useState(selectedEmployee.firstName);
-    const [lastName, setLastName] = useState(selectedEmployee.lastName);
-    const [email, setEmail] = useState(selectedEmployee.email);
-    const [salary, setSalary] = useState(selectedEmployee.salary);
-    const [date, setDate] = useState(selectedEmployee.date);
+  const handleUpdate = (e) => {
+    e.preventDefault();
 
-    const handleUpdate = e => {
-        e.preventDefault();
+    if (!firstName || !lastName || !email || !date) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'All fields are required.',
+        showConfirmButton: true,
+      });
+    }
 
-        if (!firstName || !lastName || !email || !salary || !date) {
-            return Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'All fields are required.',
-                showConfirmButton: true
-            });
-        }
-
-        const employee = {
-            id,
-            firstName,
-            lastName,
-            email,
-            salary,
-            date
-        };
-
-        for (let i = 0; i < employees.length; i++) {
-            if (employees[i].id === id) {
-                employees.splice(i, 1, employee);
-                break;
-            }
-        }
-
-        setEmployees(employees);
-        setIsEditing(false);
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Updated!',
-            text: `${employee.firstName} ${employee.lastName}'s data has been updated.`,
-            showConfirmButton: false,
-            timer: 1500
-        });
+    const updatedEmployee = {
+      _id: id, // Use _id in the updated employee object
+      firstname: firstName,
+      lastname: lastName,
+      email,
+      date_of_join: date,
     };
 
+    // Map over the employees array and update the selected employee
+    const updatedEmployees = employees.map((employee) =>
+      employee._id === id ? updatedEmployee : employee
+    );
+
+    setEmployees(updatedEmployees);
+    setIsEditing(false);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Updated!',
+      text: `${updatedEmployee.firstname} ${updatedEmployee.lastname}'s data has been updated.`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
     return (
         <div className="small-container">
             <form onSubmit={handleUpdate}>
@@ -78,14 +72,6 @@ function Edit({ employees, selectedEmployee, setEmployees, setIsEditing }) {
                     name="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                />
-                <label htmlFor="salary">Salary ($)</label>
-                <input
-                    id="salary"
-                    type="number"
-                    name="salary"
-                    value={salary}
-                    onChange={e => setSalary(e.target.value)}
                 />
                 <label htmlFor="date">Date</label>
                 <input

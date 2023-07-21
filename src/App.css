@@ -37,9 +37,7 @@
   margin-top:100px;
 }
 
-.left-side-nav{
-  margin-top:100px;
-}
+
    .App {
     text-align: center;
   }
@@ -78,4 +76,7 @@
       transform: rotate(360deg);
     }
   }
-  
+  .h1{
+    font-size: 2rem !important;
+  }
+ 

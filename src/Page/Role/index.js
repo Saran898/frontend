@@ -16,17 +16,18 @@ function Role() {
   const [isEditing, setIsEditing] = useState(false);
   const [roleFilter, setRoleFilter] = useState('All');
 
-  // const handleUpdate = (id) => {
-  //   const employee = employees.find((employee) => employee._id === id); // Use _id instead of id
-
-    const handleUpdate = (selectedEmployee) => {
-      setSelectedEmployee(selectedEmployee);
-      setIsEditing(true);
-
+  const handleUpdate = (employeeId) => {
+    // Find the selected employee based on the employeeId
+    const selectedEmployee = employees.find((employee) => employee.role_id === employeeId);
+    setSelectedEmployee(selectedEmployee);
+    console.log(selectedEmployee);
+    setIsEditing(true);
   };
+
   const handleRoleFilter = (filter) => {
     setRoleFilter(filter);
   };
+  console.log(roleFilter);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -38,9 +39,9 @@ function Role() {
       cancelButtonText: 'No, cancel!',
     }).then((result) => {
       if (result.isConfirmed) {
-        const employeeToDelete = employees.find((employee) => employee._id === id); // Use _id instead of id
+        const employeeToDelete = employees.find((employee) => employee.role_id === id); // Use _id instead of id
 
-        setEmployees((prevEmployees) => prevEmployees.filter((employee) => employee._id !== id));
+        setEmployees((prevEmployees) => prevEmployees.filter((employee) => employee.role_id !== id));
 
         Swal.fire({
           icon: 'success',
@@ -59,7 +60,7 @@ function Role() {
       {/* List */}
       {!isAdding && !isEditing && (
         <>
-          <Header setIsAdding={setIsAdding} handleRoleFilter={handleRoleFilter}/>
+                 <Header setIsAdding={setIsAdding} handleRoleFilter={handleRoleFilter} />
           <List employees={employees} handleUpdate={handleUpdate} handleDelete={handleDelete} roleFilter={roleFilter} />
         </>
             )}
