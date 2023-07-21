@@ -9,7 +9,7 @@ function Header(setIsAdding) {
         <div>
             
         <button onClick={() => setIsAdding(true)}
-        className='round-button'> Add Button</button>
+        className='round-button'> Add Employee</button>
 
          </div> 
         
