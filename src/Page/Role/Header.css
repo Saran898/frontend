@@ -1,0 +1,116 @@
+.round-button{
+    width: auto;
+    height: auto;
+    display: inline-block;
+    border: 1px solid #404e67;
+    border-radius: 4px;
+    background-color:#404e67; ;
+    color: #ffffff;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    text-transform: none;
+    padding: 0.75rem 1.25rem;
+    margin: 0 0 0.5rem 0;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+    border-radius: 40px;
+ 
+}
+
+.button:hover,
+a.button:hover,
+button:hover,
+[type='submit']:hover,
+[type='reset']:hover,
+[type='button']:hover {
+  border: 1px solid #bcbcbc;
+  background: #bcbcbc;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.button:focus,
+.button:active,
+a.button:focus,
+a.button:active,
+button:focus,
+button:active,
+[type='submit']:focus,
+[type='submit']:active,
+[type='reset']:focus,
+[type='reset']:active,
+[type='button']:focus,
+[type='button']:active {
+  border: 1px solid #0250bc;
+  background: #0250bc;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.button::-moz-focus-inner,
+a.button::-moz-focus-inner,
+button::-moz-focus-inner,
+[type='submit']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='button']::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.accent-button,
+a.accent-button {
+  color: #ffffff;
+  border: 1px solid #29de7d;
+  background: #29de7d;
+}
+
+.accent-button:hover,
+.accent-button:focus,
+.accent-button:active,
+a.accent-button:hover,
+a.accent-button:focus,
+a.accent-button:active {
+  color: #ffffff;
+  border: 1px solid #1cb864;
+  background: #1cb864;
+}
+
+.muted-button,
+a.muted-button {
+  background: transparent;
+  border: 1px solid #cdcdcd;
+  color: #4e4e4e;
+}
+
+.muted-button:hover,
+.muted-button:focus,
+.muted-button:active,
+a.muted-button:hover,
+a.muted-button:focus,
+a.muted-button:active {
+  color: #4e4e4e;
+  border: 1px solid #818181;
+  background: transparent;
+}
+
+.round-button,
+a.round-button {
+  border-radius: 40px;
+}
+
+.square-button,
+a.square-button {
+  border-radius: 0;
+}
+
+.full-button,
+a.full-button {
+  display: block;
+  width: 100%;
+}
+
+  

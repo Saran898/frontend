@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Swal from 'sweetalert2';
 
 function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
   const id = selectedEmployee._id; // Use _id from the selectedEmployee object
 
+  useEffect(() => {
+    setRoleName(selectedEmployee.role_name);
+    setDeptName(selectedEmployee.dept_name);
+  }, [selectedEmployee]);
+
   const [firstName, setFirstName] = useState(selectedEmployee.firstname);
   const [lastName, setLastName] = useState(selectedEmployee.lastname);
   const [email, setEmail] = useState(selectedEmployee.email);
   const [date, setDate] = useState(selectedEmployee.date_of_join);
+  const [gender, setGender] = useState(selectedEmployee.gender);
+  const [address, setAddress] = useState(selectedEmployee.address);
+  const [mobileNo, setMobileNo] = useState(selectedEmployee.mobile_no);
+  const [deptName, setDeptName] = useState(selectedEmployee.dept_name);
+  const [roleName, setRoleName] = useState(selectedEmployee.role_name);
+ 
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -27,6 +38,11 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
       lastname: lastName,
       email,
       date_of_join: date,
+      gender,
+      address,
+      mobile_no: mobileNo,
+      dept_name: deptName,
+      role_name: roleName,
     };
 
     // Map over the employees array and update the selected employee
@@ -73,13 +89,41 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
-                <label htmlFor="date">Date</label>
+                  
+                <label htmlFor="address">Address</label>
                 <input
-                    id="date"
-                    type="date"
-                    name="date"
-                    value={date}
-                    onChange={e => setDate(e.target.value)}
+                  id="address"
+                  type="text"
+                  name="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+                <label htmlFor="mobileNo">Mobile No</label>
+                <input
+                  id="mobileNo"
+                  type="text"
+                  name="mobileNo"
+                  value={mobileNo}
+                  onChange={(e) => setMobileNo(e.target.value)}
+                />
+                
+                
+                <label htmlFor="deptName">Department Name</label>
+                <input
+                  id="deptName"
+                  type="text"
+                  name="deptName"
+                  value={deptName}
+                  onChange={(e) => setDeptName(e.target.value)}
+                />
+                
+                <label htmlFor="roleName">Role Name</label>
+                <input
+                  id="roleName"
+                  type="text"
+                  name="roleName"
+                  value={roleName}
+                  onChange={(e) => setRoleName(e.target.value)}
                 />
                 <div style={{ marginTop: '30px' }}>
                     <input type="submit" value="Update" />

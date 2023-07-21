@@ -16,10 +16,10 @@ function Role() {
   const [isEditing, setIsEditing] = useState(false);
   const [roleFilter, setRoleFilter] = useState('All');
 
-  // const handleUpdate = (id) => {
-  //   const employee = employees.find((employee) => employee._id === id); // Use _id instead of id
+  const handleUpdate = (id) => {
+    const selectedEmployee = employees.find((employee) => employee._id === id); // Use _id instead of id
 
-    const handleUpdate = (selectedEmployee) => {
+    // const handleUpdate = (selectedEmployee) => {
       setSelectedEmployee(selectedEmployee);
       setIsEditing(true);
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import Pagination from './Pagination.js';
 function List({ handleUpdate,roleFilter }) {
   const [employees, setEmployees] = useState([]);
   const [activeStatus, setActiveStatus] = useState({});
@@ -33,16 +33,16 @@ function List({ handleUpdate,roleFilter }) {
     const dateObj = new Date(isoDate);
     return dateObj.toISOString().split('T')[0]; // Get the first part of the ISO date (YYYY-MM-DD)
   };
-
   // Get the current page's data
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentEmployees = employees.slice(indexOfFirstItem, indexOfLastItem);
 
   // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
   const filteredEmployees = roleFilter === 'All' ? employees : employees.filter((employee) => employee.is_active_flag === (roleFilter === 'true'));
   const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastItem);
+  // Change to the previous page
+
   return (
     <div className='contain-table'>
       <table className='striped-table'>
@@ -78,10 +78,10 @@ function List({ handleUpdate,roleFilter }) {
                 </td>
                 <td className='text-left'>
                   <button
-                    className={`button ${activeStatus[employee._id] ? 'active-button' : 'muted-button'}`}
+                    className={`button ${activeStatus[employee._id] ? 'muted-button':'active-button'}`}
                     onClick={() => handleToggle(employee._id)}
                   >
-                    {activeStatus[employee._id] ? 'Active' : 'Inactive'}
+                    {activeStatus[employee._id] ?  'Inactive':'Active' }
                   </button>
                 </td>
               </tr>
@@ -95,11 +95,13 @@ function List({ handleUpdate,roleFilter }) {
       </table>
       {/* Pagination */}
       <div className='pagination'>
-        {Array.from({ length: Math.ceil(employees.length / itemsPerPage) }, (_, index) => (
-          <button key={index} onClick={() => paginate(index + 1)} className={currentPage === index + 1 ? 'active' : ''}>
-            {index + 1}
-          </button>
-        ))}
+        <Pagination
+          onPageChange={onPageChange}
+          totalCount={filteredEmployees.length}
+          siblingCount={1}
+          currentPage={currentPage}
+          pageSize={itemsPerPage}
+        />
       </div>
     </div>
   );

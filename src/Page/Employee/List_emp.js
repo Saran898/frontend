@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import Pagination from './Pagination';
 function List({ handleEdit, handleDelete }) {
   const [employees, setEmployees] = useState([]);
   const [isActive, setIsActive] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Number of items to display per page
 
   const handleToggle = () => {
     setIsActive(!isActive);
@@ -22,6 +24,15 @@ function List({ handleEdit, handleDelete }) {
       .catch((error) => console.error('Error fetching data:', error));
   }, []); // Empty dependency array to run the effect only once on component mount
 
+  // Get the current page's data
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  // Change page
+  const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
+  const currentEmployees = employees.slice(indexOfFirstItem, indexOfLastItem);
+  // Change to the previous page
+
   return (
     <div className="contain-table">
       <table className="striped-table">
@@ -40,8 +51,8 @@ function List({ handleEdit, handleDelete }) {
           </tr>
         </thead>
         <tbody>
-          {employees.length > 0 ? (
-            employees.map((employee, i) => (
+          {currentEmployees.length > 0 ? (
+            currentEmployees.map((employee, i) => (
               <tr key={employee._id}>
                 <td>{i + 1}</td>
                 <td>{employee.firstname}</td>
@@ -71,11 +82,20 @@ function List({ handleEdit, handleDelete }) {
             ))
           ) : (
             <tr>
-              <td colSpan={8}>No Employees</td>
+              <td colSpan={9}>No Employees</td>
             </tr>
           )}
         </tbody>
       </table>
+      <div className='pagination'>
+        <Pagination
+          onPageChange={onPageChange}
+          totalCount={employees.length}
+          siblingCount={1}
+          currentPage={currentPage}
+          pageSize={itemsPerPage}
+        />
+      </div>
     </div>
   );
 }

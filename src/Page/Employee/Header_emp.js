@@ -4,7 +4,6 @@ import searchIcon from '../../images/searchicon.png';
 function Header({ setIsAdding, handleSearch, handleManagerFilter, handleRoleFilter }) {
   const [searchInput, setSearchInput] = useState('');
   const [managerFilter, setManagerFilter] = useState('All');
-  const [roleFilter, setRoleFilter] = useState('All');
 
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
@@ -16,16 +15,11 @@ function Header({ setIsAdding, handleSearch, handleManagerFilter, handleRoleFilt
     handleManagerFilter(e.target.value);
   };
 
-  const handleRoleFilterChange = (e) => {
-    setRoleFilter(e.target.value);
-    handleRoleFilter(e.target.value);
-  };
-
   const headerStyle = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: '18px',
+    marginTop: '-11px',
   };
 
   const searchContainerStyle = {
@@ -53,10 +47,12 @@ function Header({ setIsAdding, handleSearch, handleManagerFilter, handleRoleFilt
   const selectContainerStyle = {
     display: 'flex',
     alignItems: 'center',
+    width: '30%',
   };
 
   const selectLabelStyle = {
     marginRight: '8px',
+    width:'100%',
   };
 
   return (

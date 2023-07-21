@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './Header.css';
 
 function Header({ setIsAdding, handleRoleFilter }) {
   const [roleFilter, setRoleFilter] = useState('All');
@@ -14,17 +14,18 @@ function Header({ setIsAdding, handleRoleFilter }) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: '18px',
+    marginTop: '-11px',
   };
 
   const selectContainerStyle = {
     display: 'flex',
     alignItems: 'center',
-    width: '36%',
+    width: '28%',
   };
 
   const selectLabelStyle = {
     marginRight: '8px',
+    width:'72%',
   };
 
   return (
