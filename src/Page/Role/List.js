@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination.js';
 
-function List({ handleUpdate,roleFilter }) {
-  const [employees, setEmployees] = useState([]);
+function List({ employees,handleUpdate,roleFilter }) {
+  // const [employees, setEmployees] = useState([]);
   const [activeStatus, setActiveStatus] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4; // Number of items to display per page
@@ -14,20 +14,20 @@ function List({ handleUpdate,roleFilter }) {
     }));
   };
 
-  useEffect(() => {
-    fetch('http://192.168.11.150:4000/roles')
-      .then((response) => response.json())
-      .then((data) => {
-        setEmployees(data);
-        // Set the activeStatus based on the data
-        const initialActiveStatus = {};
-        data.forEach((employee) => {
-          initialActiveStatus[employee.role_id] = employee.is_active_flag;
-        });
-        setActiveStatus(initialActiveStatus);
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://192.168.11.150:4000/roles')
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setEmployees(data);
+  //       // Set the activeStatus based on the data
+  //       const initialActiveStatus = {};
+  //       data.forEach((employee) => {
+  //         initialActiveStatus[employee.role_id] = employee.is_active_flag;
+  //       });
+  //       setActiveStatus(initialActiveStatus);
+  //     })
+  //     .catch((error) => console.error('Error fetching data:', error));
+  // }, []);
  
 
 // Get the current page's data
@@ -37,6 +37,7 @@ const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 // Change page
 const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
 const filteredEmployees = roleFilter === 'All' ? employees : employees.filter((employee) => employee.is_active_flag === (roleFilter === 'true'));
+console.log(filteredEmployees);
 const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastItem);
 // Change to the previous page
 

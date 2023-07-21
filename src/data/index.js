@@ -72,7 +72,32 @@ const employeeData = [
   "role_id": 1007,
   "__v": 0
 },
- 
+{
+  "_id": "64b90c28b36ff815678d9269",
+  "role_name": "CEO",
+  "dept_id": 2001,
+  "dept_name": "Admin",
+  "inserted_by_name": "Naga",
+  "is_active_flag": false,
+  "inserted_date": "2023-07-20T10:27:52.008Z",
+  "updated_date": "2023-07-20T17:50:47.515Z",
+  "role_id": 1002,
+  "__v": 0,
+  "updated_by": "Naga"
+},
+{
+  "_id": "64b90c28b36ff815678d9269",
+  "role_name": "CEO",
+  "dept_id": 2001,
+  "dept_name": "Admin",
+  "inserted_by_name": "Naga",
+  "is_active_flag": false,
+  "inserted_date": "2023-07-20T10:27:52.008Z",
+  "updated_date": "2023-07-20T17:50:47.515Z",
+  "role_id": 1002,
+  "__v": 0,
+  "updated_by": "Naga"
+}, 
   // Add other employee data here...
 ];
 

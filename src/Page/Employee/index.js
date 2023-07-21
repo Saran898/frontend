@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Swal from 'sweetalert2';
-
+import './spinner.css'
 import Header from './Header_emp';
 import List from './List_emp';
 import Add from './Add_emp';
 import Edit from './Edit_emp';
 
 import { employeesData } from '../../data';
+import { HashLoader } from 'react-spinners';
 
 function Employee() {
 
@@ -46,12 +47,24 @@ function Employee() {
             }
         });
     }
-
+    const [loading, setLoading] = useState(false)
+    useEffect(()=>{
+      setLoading(true)
+      setTimeout(()=>{
+      setLoading(false)
+    },2000)
+    },[])
 
     return (
         <div className='container'>
-            {/* List */}
-            {!isAdding && !isEditing && (
+             {
+        loading?
+      <HashLoader className='spinners'color={'#404e67'} loading={loading} size={150} align-item={'center'}/>
+      :
+      
+      <div>
+ {/* List */}
+ {!isAdding && !isEditing && (
                 <>
                     <Header
                         setIsAdding={setIsAdding}
@@ -80,6 +93,9 @@ function Employee() {
                     setIsEditing={setIsEditing}
                 />
             )}
+      </div>
+             }
+           
         </div>
     )
 }

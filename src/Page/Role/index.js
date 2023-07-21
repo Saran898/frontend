@@ -1,13 +1,14 @@
 // Role.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-
+import "./spinner.css"
 import Header from './Header';
 import List from './List';
 import Add from './Add';
 import Edit from './Edit';
 
 import { employeeData } from '../../data';
+import { HashLoader } from 'react-spinners';
 
 function Role() {
   const [employees, setEmployees] = useState(employeeData);
@@ -53,10 +54,22 @@ function Role() {
       }
     });
   };
+  const [loading, setLoading] = useState(false)
+  useEffect(()=>{
+    setLoading(true)
+    setTimeout(()=>{
+    setLoading(false)
+  },2000)
+  },[])
 
   return (
     <div className='container'>
-      {/* ... other components ... */}
+      {
+        loading?
+      <HashLoader className='spinners'color={'#404e67'} loading={loading} size={150} align-item={'center'}/>
+      :
+      <div>
+        {/* ... other components ... */}
       {/* List */}
       {!isAdding && !isEditing && (
         <>
@@ -81,6 +94,9 @@ function Role() {
                     setIsEditing={setIsEditing}
                 />
             )}
+      </div>
+}
+      
         </div>
     )
 }
