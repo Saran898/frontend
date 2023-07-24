@@ -12,20 +12,35 @@ function Add({ employees, setEmployees, setIsAdding }) {
   const [date, setDate] = useState('');
   const [deptName, setDeptName] = useState(''); // Dropdown for department name
   const [roleName, setRoleName] = useState(''); // Dropdown for role name
-
+  const [departments, setDepartments] = useState([]);
+  const [roles, setRoles] = useState([]);
   const textInput = useRef(null);
 
-    // Define the name pattern for first name and last name
-    const namePattern = /^[a-zA-Z]+$/;
+  // Define the name pattern for first name and last name
+  const namePattern = /^[a-zA-Z]+$/;
 
   useEffect(() => {
-    textInput.current.focus();
+    fetch('http://192.168.11.150:4000/employees')
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the API response and update the employees state
+        setEmployees(data);
+        const uniqueDepartments = [...new Set(data.map((role) => role.dept_name))];
+        // Set the unique department names to the state
+        setDepartments(uniqueDepartments);
+        const uniqueRoles = [...new Set(data.map((role) => role.role_name))];
+        // Set the unique department names to the state
+        setRoles(uniqueRoles);
+      })
+      .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   const handleAdd = (e) => {
+
     e.preventDefault();
+    
+
     // Validation for first name and last name to disallow special characters
-    const namePattern = /^[a-zA-Z]+$/;
     let hasError = false;
 
     if (!firstName || !namePattern.test(firstName)) {
@@ -86,35 +101,38 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-    // Add the new employee data
-    const id = employees.length + 1;
-    const newEmployee = {
-      _id: `ObjectId("${id}")`,
-      emp_id: id,
-      firstname: firstName,
-      lastname: lastName,
-      gender: gender,
-      address: address,
-      email: email,
-      mobile_no: parseInt(mobileNo),
-      age: parseInt(age),
-      date_of_join: new Date(date).toISOString(),
-      dept_name: deptName,
-      role_name: roleName,
-      reporting_to_id: id,
-      is_active_flag: true,
-      inserted_by: 'admin',
-      updated_by: 'admin',
-      inserted_date: new Date().toISOString(),
-      updated_date: new Date().toISOString(),
-      __v: 0,
-    };
-    console.log('Inserted Employee Data:', newEmployee); // Log the inserted data to the console
 
-    employees.push(newEmployee);
-    setEmployees(employees);
+// Add the new employee data
+const newEmployee = {
+  firstname: firstName,
+  lastname: lastName,
+  gender: gender,
+  address: address,
+  email: email,
+  mobile_no: parseInt(mobileNo),
+  age: parseInt(age),
+  date_of_join: new Date(date).toISOString(),
+  dept_name: deptName,
+  role_name: roleName,
+  inserted_by: 'admin',
+};
+
+// Log the inserted data to the console (optional)
+console.log('Inserted Employee Data:', newEmployee);
+
+// Send the data to the server using fetch
+fetch('http://192.168.11.150:4000/employees', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(newEmployee),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // Handle the response from the API, update the employees state, and show success message
+    setEmployees([...employees, data]);
     setIsAdding(false);
-
     Swal.fire({
       icon: 'success',
       title: 'Added!',
@@ -122,6 +140,18 @@ function Add({ employees, setEmployees, setIsAdding }) {
       showConfirmButton: false,
       timer: 1500,
     });
+  })
+  .catch((error) => {
+    // Handle errors from the API request
+    console.error('Error adding new employee:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',  
+      text: 'Failed to add new employee.',
+      showConfirmButton: true,
+    });
+  });
+
   };
 
   // Function to handle entering only numbers for mobile number
@@ -131,19 +161,19 @@ function Add({ employees, setEmployees, setIsAdding }) {
   };
 
   // Dropdown options for department names and role names
-  const departmentOptions = [
-    'Admin',
-    'Finance',
-    'HR',
-    // Add other department names as needed
-  ];
+  // const departmentOptions = [
+  //   'Admin',
+  //   'Finance',
+  //   'HR',
+  //   // Add other department names as needed
+  // ];
 
-  const roleOptions = [
-    'CEO',
-    'Manager',
-    'Employee',
-    // Add other role names as needed
-  ];
+  // const roleOptions = [
+  //   'CEO',
+  //   'Manager',
+  //   'Employee',
+  //   // Add other role names as needed
+  // ];
 
   return (
     <div className="small-container">
@@ -194,7 +224,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
           Male
         </div>
         <label htmlFor="address">Address</label>
-
         <input
           id="address"
           type="text"
@@ -242,7 +271,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
           onChange={(e) => setDeptName(e.target.value)}
         >
           <option value="">Select Department</option>
-          {departmentOptions.map((dept) => (
+          {departments.map((dept) => (
             <option key={dept} value={dept}>
               {dept}
             </option>
@@ -256,7 +285,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
           onChange={(e) => setRoleName(e.target.value)}
         >
           <option value="">Select Role</option>
-          {roleOptions.map((role) => (
+          {roles.map((role) => (
             <option key={role} value={role}>
               {role}
             </option>

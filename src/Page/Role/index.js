@@ -9,7 +9,7 @@ import Edit from './Edit';
 
 import { employeeData } from '../../data';
 
-function Role() {
+function Role(handleToggle) {
   const [employees, setEmployees] = useState(employeeData);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -20,9 +20,11 @@ function Role() {
     // Find the selected employee based on the employeeId
     const selectedEmployee = employees.find((employee) => employee.role_id === employeeId);
     setSelectedEmployee(selectedEmployee);
-    console.log(selectedEmployee);
     setIsEditing(true);
   };
+  // const handleToggle = (id) => {
+  //   // ... (the implementation of the handleToggle function) ...
+  // };
 
   const handleRoleFilter = (filter) => {
     setRoleFilter(filter);
@@ -52,6 +54,7 @@ function Role() {
         });
       }
     });
+    
   };
 
   return (
@@ -60,8 +63,14 @@ function Role() {
       {/* List */}
       {!isAdding && !isEditing && (
         <>
-                 <Header setIsAdding={setIsAdding} handleRoleFilter={handleRoleFilter} />
-          <List employees={employees} handleUpdate={handleUpdate} handleDelete={handleDelete} roleFilter={roleFilter} />
+          <Header setIsAdding={setIsAdding} handleRoleFilter={handleRoleFilter} />
+          <List
+            employees={employees}
+            handleUpdate={handleUpdate}
+            handleDelete={handleDelete}
+            handleToggle={handleToggle} // Pass the handleToggle function as a prop
+            roleFilter={roleFilter}
+          />
         </>
             )}
             {/* Add */}

@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import searchIcon from '../../images/searchicon.png';
 
-function Header({ setIsAdding, handleSearch, handleManagerFilter }) {
+function Header({ setIsAdding, filterBySearch, setFilteredUsers }) {
   const [searchInput, setSearchInput] = useState('');
-  const [managerFilter, setManagerFilter] = useState('All');
-
 
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
-    handleSearch(e.target.value);
+    filterBySearch(e.target.value);
   };
 
-  const handleManagerFilterChange = (e) => {
-    setManagerFilter(e.target.value);
-    handleManagerFilter(e.target.value);
-  };
+  // Rest of the code remains the same...
 
+  useEffect(() => {
+    // Fetch employees from the backend API here
+    fetch('http://192.168.11.150:4000/employees') // Replace this with your actual backend route
+      .then((response) => response.json())
+      .then((data) => {
+        setFilteredUsers(data);
+      })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, [setFilteredUsers]);
 
 
   const headerStyle = {
@@ -47,40 +51,25 @@ function Header({ setIsAdding, handleSearch, handleManagerFilter }) {
     marginRight: '8px',
   };
 
-  const selectContainerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    width: '30%',
-  };
-
-  const selectLabelStyle = {
-    marginRight: '8px',
-    width:'100%',
-  };
-
   return (
-    <header >
+    <header>
       <h1>Employee Management</h1>
       <div style={headerStyle}>
-      <div>
-        <button onClick={() => setIsAdding(true)} className='round-button'>Add Button</button>
-      </div>
-      <div style={searchContainerStyle}>
-        <input type="text" value={searchInput} onChange={handleSearchInputChange} placeholder="Search by name..." style={searchInputStyle} />
-        <img src={searchIcon} alt="Search" style={searchIconStyle} />
-
-      </div>
-      <div style={selectContainerStyle}>
-        <label htmlFor="managerFilter" style={selectLabelStyle}>Filter By Manager:</label>
-        <select id="managerFilter" value={managerFilter} onChange={handleManagerFilterChange}>
-          <option value="All">All</option>
-          <option value="Manager 1">Manager 1</option>
-          <option value="Manager 2">Manager 2</option>
-          <option value="Manager 3">Manager 3</option>
-        </select>
-      </div>
-    
-      {/* Pagination component can be added here */}
+        <div>
+          <button onClick={() => setIsAdding(true)} className='round-button'>
+            Add Button
+          </button>
+        </div>
+        <div style={searchContainerStyle}>
+          <input
+            type="text"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+            placeholder="Search by role name..."
+            style={searchInputStyle}
+          />
+          <img src={searchIcon} alt="Search" style={searchIconStyle} />
+        </div>
       </div>
     </header>
   );
