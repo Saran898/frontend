@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 
-
 function Header({ setIsAdding, handleRoleFilter }) {
   const [roleFilter, setRoleFilter] = useState('All');
 
-
   const handleRoleFilterChange = (e) => {
-    setRoleFilter(e.target.value);
-    handleRoleFilter(e.target.value);
+    const newRoleFilter = e.target.value;
+    setRoleFilter(newRoleFilter);
+    handleRoleFilter(newRoleFilter); // Call the callback function with the updated roleFilter value
   };
 
   const headerStyle = {
@@ -25,26 +24,30 @@ function Header({ setIsAdding, handleRoleFilter }) {
 
   const selectLabelStyle = {
     marginRight: '8px',
-    width:'72%',
+    width: '72%',
   };
 
   return (
-    <header >
+    <header>
       <h1>Role Management</h1>
       <div style={headerStyle}>
-      <div>
-        <button onClick={() => setIsAdding(true)} className='round-button'>Add Button</button>
-      </div>
-    
-      <div style={selectContainerStyle}>
-        <label htmlFor="roleFilter" style={selectLabelStyle}>Filter By Role:</label>
-        <select id="roleFilter" value={roleFilter} onChange={handleRoleFilterChange}>
-          <option value="All">All</option>
-          <option value="true">Active</option>
-          <option value="false">Inactive</option>
-        </select>
-      </div>
-      {/* Pagination component can be added here */}
+        <div>
+          <button onClick={() => setIsAdding(true)} className='round-button'>
+            Add Button
+          </button>
+        </div>
+
+        <div style={selectContainerStyle}>
+          <label htmlFor='roleFilter' style={selectLabelStyle}>
+            Filter By Role:
+          </label>
+          <select id='roleFilter' value={roleFilter} onChange={handleRoleFilterChange}>
+            <option value='All'>All</option>
+            <option value='true'>Active</option>
+            <option value='false'>Inactive</option>
+          </select>
+        </div>
+        {/* Pagination component can be added here */}
       </div>
     </header>
   );

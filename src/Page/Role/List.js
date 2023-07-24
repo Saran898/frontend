@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination.js';
 
-function List({ handleUpdate,roleFilter }) {
+function List({ handleUpdate, roleFilter }) {
   const [employees, setEmployees] = useState([]);
   const [activeStatus, setActiveStatus] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4; // Number of items to display per page
 
-  const handleToggle = (id) => {
-    setActiveStatus((prevStatus) => ({
-      ...prevStatus,
-      [id]: !prevStatus[id],
-    }));
-  };
-
+  // Fetch data and initialize activeStatus on component mount and whenever roleFilter changes
   useEffect(() => {
     fetch('http://192.168.11.150:4000/roles')
       .then((response) => response.json())
@@ -27,8 +21,46 @@ function List({ handleUpdate,roleFilter }) {
         setActiveStatus(initialActiveStatus);
       })
       .catch((error) => console.error('Error fetching data:', error));
-  }, []);
- 
+  }, [roleFilter]); // Add roleFilter as a dependency
+
+  const handleToggle = (id) => {
+    // Determine the current status of the role
+    const currentStatus = activeStatus[id];
+        // Determine the new status (active/inactive)
+        const newStatus = !currentStatus;
+
+    // Toggle the active status in the local state
+    setActiveStatus((prevStatus) => ({
+      ...prevStatus,
+      [id]: !currentStatus,
+    }));
+
+
+
+    // Make the API call to update the role status
+    fetch(`http://192.168.11.150:4000/ract/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ is_active_flag: newStatus }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to update the role status.');
+        }
+        // Role status updated successfully, you may want to handle this
+      })
+      .catch((error) => {
+        console.error('Error updating the role status:', error);
+        // Revert the local state change if the API call fails
+        setActiveStatus((prevStatus) => ({
+          ...prevStatus,
+          [id]: currentStatus,
+        }));
+      });
+  };
+
 
 // Get the current page's data
 const indexOfLastItem = currentPage * itemsPerPage;
@@ -68,13 +100,14 @@ const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastIt
                   </button>
                 </td>
                 <td className='text-left'>
-                  <button
-                    className={`button ${activeStatus[employee.role_id] ? 'active-button' : 'muted-button'}`}
-                    onClick={() => handleToggle(employee.role_id)}
-                  >
-                    {activeStatus[employee.role_id] ? 'Active' : 'Inactive'}
-                  </button>
-                </td>
+  <button
+    className={`button ${activeStatus[employee.role_id] ? 'active-button' : 'muted-button'}`}
+    onClick={() => handleToggle(employee.role_id)}
+  >
+    {activeStatus[employee.role_id] ? 'Active' : 'Inactive'}
+  </button>
+</td>
+
               </tr>
             ))
           ) : (
