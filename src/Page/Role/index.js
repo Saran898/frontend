@@ -70,6 +70,7 @@ function Role(handleToggle) {
             handleDelete={handleDelete}
             handleToggle={handleToggle} // Pass the handleToggle function as a prop
             roleFilter={roleFilter}
+            setSelectedEmployee={setSelectedEmployee} // Pass setSelectedEmployee function down to List component
           />
         </>
             )}

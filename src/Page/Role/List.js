@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination.js';
 
-function List({ handleUpdate, roleFilter }) {
+function List({ handleUpdate, roleFilter,setSelectedEmployee }) {
   const [employees, setEmployees] = useState([]);
   const [activeStatus, setActiveStatus] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -95,7 +95,13 @@ const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastIt
                 <td>{employee.dept_name}</td>
                 <td>{employee.role_name}</td>
                 <td className='text-right'>
-                  <button onClick={() => handleUpdate(employee.role_id)} className='button muted-button'>
+                  {/* <button onClick={() => handleUpdate(employee.role_id)} className='button muted-button'>
+                    Edit
+                  </button> */}
+                     <button onClick={() => {
+                    handleUpdate(employee.role_id);
+                    setSelectedEmployee(employee); // Set the selected employee in the Employee component
+                  }} className='button muted-button'>
                     Edit
                   </button>
                 </td>

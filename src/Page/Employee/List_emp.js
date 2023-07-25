@@ -1,18 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Pagination from './Pagination.js';
 
-function List({ handledelete, handleEdit, filteredUsers }) {
-  const [activeStatus, setActiveStatus] = useState(true);
+function List({ handleDelete, handleEdit, handleToggle, filteredUsers, selectedEmployee, setSelectedEmployee }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3; // Number of items to display per page
-
-  const handleToggle = (id) => {
-    setActiveStatus((prevStatus) => ({
-      ...prevStatus,
-      [id]: !prevStatus[id],
-    }));
-  };
-  
+  const itemsPerPage = 4; // Number of items to display per page
 
   // Function to convert ISO 8601 date to desired format (YYYY-MM-DD)
   const convertDateToDisplayFormat = (isoDate) => {
@@ -32,7 +23,7 @@ function List({ handledelete, handleEdit, filteredUsers }) {
   return (
     <div className='contain-table'>
       <table className='striped-table'>
-      <thead>
+        <thead>
           <tr>
             <th>No.</th>
             <th>Employee ID</th>
@@ -60,21 +51,24 @@ function List({ handledelete, handleEdit, filteredUsers }) {
                 <td>{employee.dept_name}</td>
                 <td>{employee.role_name}</td>
                 <td className='text-right'>
-                  <button onClick={() => handleEdit(employee.emp_id)} className='button muted-button'>
+                <button onClick={() => {
+                    handleEdit(employee.emp_id);
+                    setSelectedEmployee(employee); // Set the selected employee in the Employee component
+                  }} className='button muted-button'>
                     Edit
                   </button>
                 </td>
                 <td className='text-right'>
-                  <button onClick={() => handledelete(employee.emp_id)} className='button muted-button'>
+                  <button onClick={() => handleDelete(employee.emp_id)} className='button muted-button'>
                     Delete
                   </button>
                 </td>
                 <td className='text-left'>
                   <button
-                    className={`button ${activeStatus[employee.emp_id] ? 'active-button' : 'muted-button'}`}
-                    onClick={() => handleToggle(employee.emp_id)}
+                    className={`button ${employee.is_active_flag ? 'active-button' : 'muted-button'}`}
+                    onClick={() => handleToggle(employee.emp_id, !employee.is_active_flag)}
                   >
-                    {activeStatus[employee.emp_id] ? 'Active' : 'Inactive'}
+                    {employee.is_active_flag ? 'Active' : 'Inactive'}
                   </button>
                 </td>
               </tr>
