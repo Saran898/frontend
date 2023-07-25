@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-
 function Add({ employees, setEmployees, setIsAdding }) {
   const [roleName, setRoleName] = useState('');
   const [deptName, setDeptName] = useState('');
   const [departments, setDepartments] = useState([]);
-
   useEffect(() => {
     fetch('http://192.168.11.150:4000/roles')
       .then((response) => response.json())
@@ -17,7 +15,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
-
   const handleAdd = (e) => {
     e.preventDefault();
     if (!deptName || !roleName) {
@@ -28,7 +25,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-
     const newRole = {
       dept_name: deptName,
       role_name: roleName,
@@ -75,7 +71,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         });
       });
   };
-
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>
@@ -105,5 +100,4 @@ function Add({ employees, setEmployees, setIsAdding }) {
     </div>
   );
 }
-
 export default Add;

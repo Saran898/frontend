@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-
 function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
   const id = selectedEmployee.role_id; // Use _id from the selectedEmployee object
   useEffect(() => {
@@ -17,8 +16,6 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, [selectedEmployee]);
-
-
   useEffect(() => {
     fetch(`http://192.168.11.150:4000/roles/${id}`)
       .then((response) => response.json())
@@ -32,10 +29,8 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
   const [departments, setDepartments] = useState([]);
   const [roleName, setRoleName] = useState('');
   const [deptName, setDeptName] = useState('');
-
   const handleEdit = (e) => {
     e.preventDefault();
-
     if (!roleName || !deptName) {
       return Swal.fire({
         icon: 'error',
@@ -44,12 +39,10 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
         showConfirmButton: true,
       });
     }
-
     const updatedRole = {
       role_name: roleName,
       dept_name: deptName,
     };
-
     // Send the updated role data to the server using fetch
     fetch(`http://192.168.11.150:4000/roles/${id}`, {
       method: 'PUT',
@@ -68,10 +61,8 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
           );
           return updatedEmployees;
         });
-
         // Close the editing mode
         setIsEditing(false);
-
         // Show success message
         Swal.fire({
           icon: 'success',
@@ -91,7 +82,6 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
         });
       });
   };
-
   return (
     <div className="small-container">
       <form onSubmit={handleEdit}>
@@ -133,5 +123,4 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
     </div>
   );
 }
-
 export default Edit;

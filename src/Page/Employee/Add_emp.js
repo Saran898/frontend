@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
-
 function Add({ employees, setEmployees, setIsAdding }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -16,10 +15,8 @@ function Add({ employees, setEmployees, setIsAdding }) {
   const [departments, setDepartments] = useState([]);
   const [roles, setRoles] = useState([]);
   const textInput = useRef(null);
-
   // Define the name pattern for first name and last name
   const namePattern = /^[a-zA-Z]+$/;
-
   useEffect(() => {
     fetch('http://192.168.11.150:4000/employees')
       .then((response) => response.json())
@@ -35,25 +32,18 @@ function Add({ employees, setEmployees, setIsAdding }) {
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, [setEmployees]);
-
   const handleAdd = (e) => {
-
     e.preventDefault();
-    
-
     // Validation for first name and last name to disallow special characters
     let hasError = false;
-
     if (!firstName || !namePattern.test(firstName)) {
       setFirstName('');
       hasError = true;
     }
-
     if (!lastName || !namePattern.test(lastName)) {
       setLastName('');
       hasError = true;
     }
-
     if (hasError) {
       return Swal.fire({
         icon: 'error',
@@ -62,7 +52,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-
     // Other validations as before
     if (!gender || !address || !email || !mobileNo || !age || !date || !deptName || !roleName) {
       return Swal.fire({
@@ -72,7 +61,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-
     // Validate mobile number and age
     if (isNaN(mobileNo) || isNaN(age)) {
       return Swal.fire({
@@ -82,7 +70,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-
     // Validate mobile number length
     if (mobileNo.length !== 10) {
       return Swal.fire({
@@ -92,7 +79,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-
     // Validate age range (between 18 and 70)
     if (age < 18 || age > 70) {
       return Swal.fire({
@@ -102,7 +88,6 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-
 // Add the new employee data
 const newEmployee = {
   firstname: firstName,
@@ -117,10 +102,8 @@ const newEmployee = {
   role_name: roleName,
   inserted_by: 'admin',
 };
-
 // Log the inserted data to the console (optional)
 // console.log('Inserted Employee Data:', newEmployee);
-
 // Send the data to the server using fetch
 fetch('http://192.168.11.150:4000/employees', {
   method: 'POST',
@@ -152,16 +135,13 @@ fetch('http://192.168.11.150:4000/employees', {
       showConfirmButton: true,
     });
   });
-
   };
-
   // Function to handle entering only numbers for mobile number
   const handleMobileNoChange = (e) => {
     const numericValue = e.target.value.replace(/[^0-9]/g, '');
     setMobileNo(numericValue);
   };
   const today = format(new Date(), 'yyyy-MM-dd');
-
   // Dropdown options for department names and role names
   // const departmentOptions = [
   //   'Admin',
@@ -176,7 +156,6 @@ fetch('http://192.168.11.150:4000/employees', {
   //   'Employee',
   //   // Add other role names as needed
   // ];
-
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>
@@ -205,7 +184,6 @@ fetch('http://192.168.11.150:4000/employees', {
         {lastName && !namePattern.test(lastName) && (
           <span style={{ color: 'red' }}>Last name should not contain special characters.</span>
         )}
-
         <div>
           <label>Gender</label>
           <input
@@ -308,5 +286,4 @@ fetch('http://192.168.11.150:4000/employees', {
     </div>
   );
 }
-
 export default Add;

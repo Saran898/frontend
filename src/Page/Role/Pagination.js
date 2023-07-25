@@ -1,10 +1,8 @@
 // Pagination.js
-
 import React from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from './usePagination';
 import './Pagination.css'; // You may update the path to your pagination style file.
-
 const Pagination = (props) => {
   const {
     onPageChange,
@@ -14,18 +12,15 @@ const Pagination = (props) => {
     pageSize,
     className,
   } = props;
-
   const paginationRange = usePagination({
     currentPage,
     totalCount,
     siblingCount,
     pageSize,
   });
-
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
-
   const onNext = () => {
     onPageChange(currentPage + 1);
   };
@@ -33,7 +28,6 @@ const Pagination = (props) => {
   const onPrevious = () => {
     onPageChange(currentPage - 1);
   };
-
   let lastPage = paginationRange[paginationRange.length - 1];
   return (
     <ul className={classnames('pagination-container', { [className]: className })}>
@@ -49,7 +43,6 @@ const Pagination = (props) => {
         if (pageNumber === DOTS) {
           return <li className="pagination-item dots">&#8230;</li>;
         }
-
         return (
           <li
             key={pageNumber}
@@ -73,5 +66,4 @@ const Pagination = (props) => {
     </ul>
   );
 };
-
 export default Pagination;

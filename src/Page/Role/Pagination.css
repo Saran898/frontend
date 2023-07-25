@@ -2,7 +2,7 @@
     display: flex;
     list-style-type: none;
   
-    .pagination-item {
+.pagination-item {
       padding: 0 12px;
       height: 32px;
       text-align: center;
@@ -50,7 +50,7 @@
         &.right {
           transform: rotate(45deg);
         }
-      }
+  }
   
       &.disabled {
         pointer-events: none;

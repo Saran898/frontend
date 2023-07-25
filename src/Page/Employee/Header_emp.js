@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../images/searchicon.png';
-
 function Header({ setIsAdding, filterBySearch, setFilteredUsers }) {
   const [searchInput, setSearchInput] = useState('');
-
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
     filterBySearch(e.target.value);
   };
-
   // Rest of the code remains the same...
-
   useEffect(() => {
     // Fetch employees from the backend API here
     fetch('http://192.168.11.150:4000/employees') // Replace this with your actual backend route
@@ -20,15 +16,12 @@ function Header({ setIsAdding, filterBySearch, setFilteredUsers }) {
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, [setFilteredUsers]);
-
-
   const headerStyle = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: '-11px',
   };
-
   const searchContainerStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -36,7 +29,6 @@ function Header({ setIsAdding, filterBySearch, setFilteredUsers }) {
     borderRadius: '4px',
     padding: '4px',
   };
-
   const searchInputStyle = {
     border: 'none',
     background: 'none',
@@ -44,19 +36,17 @@ function Header({ setIsAdding, filterBySearch, setFilteredUsers }) {
     padding: '8px',
     fontSize: '16px',
   };
-
   const searchIconStyle = {
     width: '20px',
     height: '20px',
     marginRight: '8px',
   };
-
   return (
     <header>
       <h1>Employee Management</h1>
       <div style={headerStyle}>
         <div>
-          <button onClick={() => setIsAdding(true)} className='round-button'>
+          <button onClick={() => setIsAdding(true)} className='round-button' title='Add Employee'>
             Add Button
           </button>
         </div>
@@ -74,5 +64,4 @@ function Header({ setIsAdding, filterBySearch, setFilteredUsers }) {
     </header>
   );
 }
-
 export default Header;

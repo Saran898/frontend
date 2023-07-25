@@ -1,7 +1,6 @@
 // Role.js
 import React, { useState,useEffect } from 'react';
 import Swal from 'sweetalert2';
-
 import Header from './Header';
 import List from './List';
 import Add from './Add';
@@ -9,14 +8,12 @@ import Edit from './Edit';
 import './Spinner.css'
 import { HashLoader } from 'react-spinners';
 import { employeeData } from '../../data';
-
 function Role(handleToggle) {
   const [employees, setEmployees] = useState(employeeData);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [roleFilter, setRoleFilter] = useState('All');
-
   const handleUpdate = (employeeId) => {
     // Find the selected employee based on the employeeId
     const selectedEmployee = employees.find((employee) => employee.role_id === employeeId);
@@ -26,12 +23,10 @@ function Role(handleToggle) {
   // const handleToggle = (id) => {
   //   // ... (the implementation of the handleToggle function) ...
   // };
-
   const handleRoleFilter = (filter) => {
     setRoleFilter(filter);
   };
   // console.log(roleFilter);
-
   const handleDelete = (id) => {
     Swal.fire({
       icon: 'warning',
@@ -43,9 +38,7 @@ function Role(handleToggle) {
     }).then((result) => {
       if (result.isConfirmed) {
         const employeeToDelete = employees.find((employee) => employee.role_id === id); // Use _id instead of id
-
         setEmployees((prevEmployees) => prevEmployees.filter((employee) => employee.role_id !== id));
-
         Swal.fire({
           icon: 'success',
           title: 'Deleted!',
@@ -54,8 +47,7 @@ function Role(handleToggle) {
           timer: 1500,
         });
       }
-    });
-    
+    }); 
   };
   const [loading, setLoading] = useState(false)
   useEffect(()=>{
@@ -64,7 +56,6 @@ function Role(handleToggle) {
     setLoading(false)
   },2000)
   },[])
-
   return (
     <div className='container'>
        {

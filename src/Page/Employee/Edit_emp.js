@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-
 function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
   const [firstName, setFirstName] = useState(selectedEmployee.firstname);
   const [lastName, setLastName] = useState(selectedEmployee.lastname);
@@ -12,9 +11,7 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
   const [date, setDate] = useState(selectedEmployee.date_of_join ? selectedEmployee.date_of_join.split('T')[0] : '');
   const [deptName, setDeptName] = useState(selectedEmployee.dept_name);
   const [roleName, setRoleName] = useState(selectedEmployee.role_name);
-
   const namePattern = /^[a-zA-Z]+$/;
-
   const handleUpdate = (e) => {
     e.preventDefault();
     console.log('Updating state:', {
@@ -23,9 +20,7 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
       gender,
       // Add other state variables here...
     });
-
     // Validation code (same as in Add component)
-
     // Update the edited employee data
     const updatedEmployee = {
       emp_id: selectedEmployee.emp_id,
@@ -41,7 +36,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
       role_name: roleName,
       inserted_by: 'admin',
     };
-
     // Send the data to the server using fetch
     fetch(`http://192.168.11.150:4000/employees/${selectedEmployee.emp_id}`, {
       method: 'PUT',
@@ -58,7 +52,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
         );
         setEmployees(updatedEmployees);
         setIsEditing(false);
-
         Swal.fire({
           icon: 'success',
           title: 'Updated!',
@@ -78,12 +71,10 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
         });
       });
   };
-
   const handleMobileNoChange = (e) => {
     const numericValue = e.target.value.replace(/[^0-9]/g, '');
     setMobileNo(numericValue);
   };
-
   return (
     <div className="small-container">
       <form onSubmit={handleUpdate}>
@@ -100,7 +91,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
         {!!firstName && !namePattern.test(firstName) && (
           <span style={{ color: 'red' }}>First name should not contain special characters.</span>
         )}
-
         <label htmlFor="lastName">Last Name</label>
         <input
           id="lastName"
@@ -113,7 +103,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
         {lastName && !namePattern.test(lastName) && (
           <span style={{ color: 'red' }}>Last name should not contain special characters.</span>
         )}
-
         <div>
           <label>Gender</label>
           <input
@@ -133,7 +122,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           />{' '}
           Male
         </div>
-
         <label htmlFor="address">Address</label>
         <input
           id="address"
@@ -142,7 +130,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
-
         <label htmlFor="email">Email</label>
         <input
           id="email"
@@ -151,7 +138,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-
         <label htmlFor="mobileNo">Mobile Number</label>
         <input
           id="mobileNo"
@@ -160,7 +146,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           value={mobileNo}
           onChange={handleMobileNoChange}
         />
-
         <label htmlFor="age">Age</label>
         <input
           id="age"
@@ -169,7 +154,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           value={age}
           onChange={(e) => setAge(e.target.value)}
         />
-
         <label htmlFor="date">Date of Joining</label>
         <input
           id="date"
@@ -178,7 +162,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-
         <label htmlFor="deptName">Department Name</label>
         <input
           id="deptName"
@@ -187,7 +170,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           value={deptName}
           onChange={(e) => setDeptName(e.target.value)}
         />
-
         <label htmlFor="roleName">Role Name</label>
         <input
           id="roleName"
@@ -196,7 +178,6 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
           value={roleName}
           onChange={(e) => setRoleName(e.target.value)}
         />
-
         <div style={{ marginTop: '30px' }}>
           <input type="submit" value="Update" />
           <input
@@ -211,5 +192,4 @@ function Edit({ selectedEmployee, employees, setEmployees, setIsEditing }) {
     </div>
   );
 }
-
 export default Edit;
