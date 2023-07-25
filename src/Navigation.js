@@ -13,8 +13,7 @@ const Navigation = () => {
         <nav className="left-side-nav">
           <ul>
             <li>
-              <NavLink to="/" cy
-              lassName="active">
+              <NavLink to="/" className="active">
               <FontAwesomeIcon icon={faUser} className="sidebar-icon" />
                 Role
               </NavLink>
