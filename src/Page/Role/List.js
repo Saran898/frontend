@@ -5,7 +5,7 @@ function List({ handleUpdate, roleFilter,setSelectedEmployee }) {
   const [employees, setEmployees] = useState([]);
   const [activeStatus, setActiveStatus] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Number of items to display per page
+  const itemsPerPage = 5; // Number of items to display per page
 
   // Fetch data and initialize activeStatus on component mount and whenever roleFilter changes
   useEffect(() => {
