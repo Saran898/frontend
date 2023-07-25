@@ -5,6 +5,8 @@ import Header from './Header_emp';
 import List from './List_emp';
 import Add from './Add_emp';
 import Edit from './Edit_emp';
+import './Spinner.css'
+import { HashLoader } from 'react-spinners';
 
 // import { employeesData } from '../../data';
 
@@ -50,7 +52,7 @@ function Employee() {
             Swal.fire({
               icon: 'success',
               title: 'Deleted!',
-              text: `${data.firstName} ${data.lastName}'s data has been deleted.`,
+              text: `${data.firstname} ${data.lastname}'s data has been deleted.`,
               showConfirmButton: false,
               timer: 1500,
             });
@@ -132,10 +134,22 @@ function Employee() {
   // const handleCancel = () => {
   //   setIsEditing(false);
   // };
+  const [loading, setLoading] = useState(false)
+  useEffect(()=>{
+    setLoading(true)
+    setTimeout(()=>{
+    setLoading(false)
+  },2000)
+  },[])
 
   return (
     <div className='container'>
     {/* List */}
+    {
+        loading?
+      <HashLoader className='spinners'color={'#404e67'} loading={loading} size={150} align-item={'center'}/>
+      :
+      <div>
     {!isAdding && !isEditing && (
       <>
         <Header setIsAdding={setIsAdding} filterBySearch={filterBySearch} setFilteredUsers={setFilteredUsers} />
@@ -166,6 +180,8 @@ function Employee() {
 
 
     )}
+    </div>
+}
   </div>
 );
 }

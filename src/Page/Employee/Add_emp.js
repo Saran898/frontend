@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 
 function Add({ employees, setEmployees, setIsAdding }) {
@@ -33,7 +34,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
         setRoles(uniqueRoles);
       })
       .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+  }, [setEmployees]);
 
   const handleAdd = (e) => {
 
@@ -118,7 +119,7 @@ const newEmployee = {
 };
 
 // Log the inserted data to the console (optional)
-console.log('Inserted Employee Data:', newEmployee);
+// console.log('Inserted Employee Data:', newEmployee);
 
 // Send the data to the server using fetch
 fetch('http://192.168.11.150:4000/employees', {
@@ -159,6 +160,7 @@ fetch('http://192.168.11.150:4000/employees', {
     const numericValue = e.target.value.replace(/[^0-9]/g, '');
     setMobileNo(numericValue);
   };
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   // Dropdown options for department names and role names
   // const departmentOptions = [
@@ -262,6 +264,7 @@ fetch('http://192.168.11.150:4000/employees', {
           name="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          max={today} // Set the max attribute to disable future dates
         />
         <label htmlFor="deptName">Department Name</label>
         <select

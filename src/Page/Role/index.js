@@ -1,12 +1,13 @@
 // Role.js
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 import Header from './Header';
 import List from './List';
 import Add from './Add';
 import Edit from './Edit';
-
+import './Spinner.css'
+import { HashLoader } from 'react-spinners';
 import { employeeData } from '../../data';
 
 function Role(handleToggle) {
@@ -29,7 +30,7 @@ function Role(handleToggle) {
   const handleRoleFilter = (filter) => {
     setRoleFilter(filter);
   };
-  console.log(roleFilter);
+  // console.log(roleFilter);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -56,9 +57,21 @@ function Role(handleToggle) {
     });
     
   };
+  const [loading, setLoading] = useState(false)
+  useEffect(()=>{
+    setLoading(true)
+    setTimeout(()=>{
+    setLoading(false)
+  },2000)
+  },[])
 
   return (
     <div className='container'>
+       {
+        loading?
+      <HashLoader className='spinners'color={'#404e67'} loading={loading} size={150} align-item={'center'}/>
+      :
+      <div>
       {/* ... other components ... */}
       {/* List */}
       {!isAdding && !isEditing && (
@@ -91,6 +104,8 @@ function Role(handleToggle) {
                     setIsEditing={setIsEditing}
                 />
             )}
+            </div>
+}
         </div>
     )
 }

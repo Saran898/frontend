@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Pagination from './Pagination.js';
+import './List_emp.css';
 
 function List({ handleDelete, handleEdit, handleToggle, filteredUsers, selectedEmployee, setSelectedEmployee }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Number of items to display per page
+  const itemsPerPage = 5; // Number of items to display per page
 
   // Function to convert ISO 8601 date to desired format (YYYY-MM-DD)
   const convertDateToDisplayFormat = (isoDate) => {
@@ -26,7 +27,7 @@ function List({ handleDelete, handleEdit, handleToggle, filteredUsers, selectedE
         <thead>
           <tr>
             <th>No.</th>
-            <th>Employee ID</th>
+            <th>Emp ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
@@ -75,7 +76,7 @@ function List({ handleDelete, handleEdit, handleToggle, filteredUsers, selectedE
             ))
           ) : (
             <tr>
-              <td colSpan={8}>No Employees</td>
+              <td colSpan={9}>No Employees</td>
             </tr>
           )}
         </tbody>
