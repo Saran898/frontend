@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination.js';
-
 function List({ handleUpdate, roleFilter,setSelectedEmployee }) {
   const [employees, setEmployees] = useState([]);
   const [activeStatus, setActiveStatus] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Number of items to display per page
-
   // Fetch data and initialize activeStatus on component mount and whenever roleFilter changes
   useEffect(() => {
     fetch('http://192.168.11.150:4000/roles')
@@ -22,21 +20,16 @@ function List({ handleUpdate, roleFilter,setSelectedEmployee }) {
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, [roleFilter]); // Add roleFilter as a dependency
-
   const handleToggle = (id) => {
     // Determine the current status of the role
     const currentStatus = activeStatus[id];
-        // Determine the new status (active/inactive)
-        const newStatus = !currentStatus;
-
+    // Determine the new status (active/inactive)
+    const newStatus = !currentStatus;
     // Toggle the active status in the local state
     setActiveStatus((prevStatus) => ({
       ...prevStatus,
       [id]: !currentStatus,
     }));
-
-
-
     // Make the API call to update the role status
     fetch(`http://192.168.11.150:4000/ract/${id}`, {
       method: 'PUT',
@@ -60,29 +53,24 @@ function List({ handleUpdate, roleFilter,setSelectedEmployee }) {
         }));
       });
   };
-
-
 // Get the current page's data
 const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
 // Change page
 const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
 const filteredEmployees = roleFilter === 'All' ? employees : employees.filter((employee) => employee.is_active_flag === (roleFilter === 'true'));
 const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastItem);
 // Change to the previous page
-
   return (
     <div className='contain-table'>
       <table className='striped-table'>
       <thead>
           <tr>
-            <th>No.</th>
+            <th>S.No</th>
             <th>Role ID</th>
             <th>Department</th>
             <th>Role</th>
             <th colSpan={2} className='text-center'>
-              Actions
             </th>
           </tr>
         </thead>
@@ -95,25 +83,22 @@ const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastIt
                 <td>{employee.dept_name}</td>
                 <td>{employee.role_name}</td>
                 <td className='text-right'>
-                  {/* <button onClick={() => handleUpdate(employee.role_id)} className='button muted-button'>
-                    Edit
-                  </button> */}
-                     <button onClick={() => {
+                <button onClick={() => {
                     handleUpdate(employee.role_id);
                     setSelectedEmployee(employee); // Set the selected employee in the Employee component
-                  }} className='button muted-button'>
+                  }} className='button muted-button' title='Edit Role'>
                     Edit
-                  </button>
+                </button>
                 </td>
                 <td className='text-left'>
-  <button
-    className={`button ${activeStatus[employee.role_id] ? 'active-button' : 'muted-button'}`}
-    onClick={() => handleToggle(employee.role_id)}
-  >
-    {activeStatus[employee.role_id] ? 'Active' : 'Inactive'}
-  </button>
-</td>
-
+                <button
+                  className={`button ${activeStatus[employee.role_id] ? 'active-button' : 'muted-button'}`}
+                  onClick={() => handleToggle(employee.role_id)}
+                  title={activeStatus[employee.role_id] ? 'Active Role' : 'Inactive Role'}
+                >
+                {activeStatus[employee.role_id] ? 'Active' : 'Inactive'}
+                </button>
+                </td>
               </tr>
             ))
           ) : (
@@ -131,12 +116,9 @@ const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastIt
           siblingCount={1}
           currentPage={currentPage}
           pageSize={itemsPerPage}
-        />
-        
-      </div>
-      
+        />        
+      </div>     
     </div>
   );
 }
-
 export default List;

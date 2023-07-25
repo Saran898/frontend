@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-
 import Header from './Header_emp';
 import List from './List_emp';
 import Add from './Add_emp';
 import Edit from './Edit_emp';
 import './Spinner.css'
 import { HashLoader } from 'react-spinners';
-
 // import { employeesData } from '../../data';
-
 function Employee() {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState([]);
-
   useEffect(() => {
     // Fetch employees from the backend API here
     fetch('http://192.168.11.150:4000/employees') // Replace this with your actual backend route
@@ -27,13 +23,11 @@ function Employee() {
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
-
   const handleEdit = (emp_id) => {
     const selectedEmployee = filteredUsers.find((employee) => employee.emp_id === emp_id);
     setSelectedEmployee(selectedEmployee);
     setIsEditing(true);
   };
-
   const handleDelete = (id) => {
     Swal.fire({
       icon: 'warning',
@@ -70,7 +64,6 @@ function Employee() {
       }
     });
   };
-
   const handleToggle = (id, isActive) => {
     // Make an API call to update the isActive status of the employee based on the `isActive` argument
     // For example, if isActive is true, make a PUT request to activate the employee, otherwise, make a PUT request to deactivate the employee.
@@ -100,9 +93,6 @@ function Employee() {
       })
       .catch((error) => console.error('Error updating status:', error));
   };
-  
-  
-
   const filterBySearch = (searchValue) => {
     // Filter the employees based on the search input value in the role_name field
     const filtered = employees.filter((employee) => {
@@ -112,7 +102,6 @@ function Employee() {
     // Update the employees list with the filtered results
     setFilteredUsers(filtered);
   };
-
   // const filterBySearch = (searchText) => {
   //   // Convert searchText to lowercase for case-insensitive matching
   //   const lowerSearchText = searchText.toLowerCase();
@@ -141,7 +130,6 @@ function Employee() {
     setLoading(false)
   },2000)
   },[])
-
   return (
     <div className='container'>
     {/* List */}
@@ -177,13 +165,10 @@ function Employee() {
         setEmployees={setEmployees}
         setIsEditing={setIsEditing}
       />
-
-
     )}
     </div>
 }
   </div>
 );
 }
-
 export default Employee;

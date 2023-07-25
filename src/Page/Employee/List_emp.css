@@ -2,8 +2,7 @@
     font-size: 15px;
         line-height: 19px;
         margin-top: 12px;
-    }
-    
+    }  
     th, td {
         text-align: left;
         padding: 0.2rem;
@@ -11,7 +10,6 @@
     .button, a.button, button, [type='submit'], [type='reset'], [type='button'] {
     margin: 4px;
     }
-    
     .button,
     a.button,
     button,
@@ -35,8 +33,7 @@
       cursor: pointer;
       text-decoration: none;
       line-height: 1;
-    }
-    
+    } 
     .button:hover,
     a.button:hover,
     button:hover,
@@ -47,8 +44,7 @@
       background: grey;
       color: #ffffff;
       text-decoration: none;
-    }
-    
+    }  
     .button:focus,
     .button:active,
     a.button:focus,
@@ -65,8 +61,7 @@
       background: #404e67;
       color: #ffffff;
       text-decoration: none;
-    }
-    
+    } 
     .button::-moz-focus-inner,
     a.button::-moz-focus-inner,
     button::-moz-focus-inner,
@@ -75,15 +70,13 @@
     [type='button']::-moz-focus-inner {
       border: 0;
       padding: 0;
-    }
-    
+    } 
     .muted-button,
     a.muted-button {
       background: transparent;
       border: 1px solid #cdcdcd;
       color: #4e4e4e;
-    }
-    
+    } 
     .muted-button:hover,
     .muted-button:focus,
     .muted-button:active,

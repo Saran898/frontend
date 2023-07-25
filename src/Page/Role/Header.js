@@ -1,38 +1,32 @@
 import React, { useState } from 'react';
-
 function Header({ setIsAdding, handleRoleFilter }) {
   const [roleFilter, setRoleFilter] = useState('All');
-
   const handleRoleFilterChange = (e) => {
     const newRoleFilter = e.target.value;
     setRoleFilter(newRoleFilter);
     handleRoleFilter(newRoleFilter); // Call the callback function with the updated roleFilter value
   };
-
   const headerStyle = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: '-11px',
   };
-
   const selectContainerStyle = {
     display: 'flex',
     alignItems: 'center',
     width: '28%',
   };
-
   const selectLabelStyle = {
     marginRight: '8px',
     width: '72%',
   };
-
   return (
     <header>
       <h1>Role Management</h1>
       <div style={headerStyle}>
         <div>
-          <button onClick={() => setIsAdding(true)} className='round-button'>
+          <button onClick={() => setIsAdding(true)} className='round-button' title='Add Role'>
             Add Button
           </button>
         </div>
@@ -52,5 +46,4 @@ function Header({ setIsAdding, handleRoleFilter }) {
     </header>
   );
 }
-
 export default Header;
