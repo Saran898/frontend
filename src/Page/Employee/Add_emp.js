@@ -1,7 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
-function Add({ employees, setEmployees, setIsAdding }) {
+import './Add_emp.css';
+const namePattern = /^[a-zA-Z]+$/;
+const addressPattern = /^[a-zA-Z0-9\s,.:/\\-]+$/;
+const MIN_NAME_LENGTH = 3;
+const MAX_NAME_LENGTH = 25;
+const emailPattern = /^(?![-_.])[a-zA-Z0-9_%+-]+(?!\.)[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+function Add({ setIsAdding }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState(''); // Updated to radio buttons
@@ -15,14 +21,11 @@ function Add({ employees, setEmployees, setIsAdding }) {
   const [departments, setDepartments] = useState([]);
   const [roles, setRoles] = useState([]);
   const textInput = useRef(null);
-  // Define the name pattern for first name and last name
-  const namePattern = /^[a-zA-Z]+$/;
   useEffect(() => {
     fetch('http://192.168.11.150:4000/employees')
       .then((response) => response.json())
       .then((data) => {
         // Handle the API response and update the employees state
-        setEmployees(data);
         const uniqueDepartments = [...new Set(data.map((role) => role.dept_name))];
         // Set the unique department names to the state
         setDepartments(uniqueDepartments);
@@ -31,18 +34,26 @@ function Add({ employees, setEmployees, setIsAdding }) {
         setRoles(uniqueRoles);
       })
       .catch((error) => console.error('Error fetching data:', error));
-  }, [setEmployees]);
+  }, []);
   const handleAdd = (e) => {
     e.preventDefault();
-    // Validation for first name and last name to disallow special characters
     let hasError = false;
-    if (!firstName || !namePattern.test(firstName)) {
+    if (!firstName || !namePattern.test(firstName) || firstName.length < MIN_NAME_LENGTH || firstName.length > MAX_NAME_LENGTH) {
       setFirstName('');
       hasError = true;
-    }
-    if (!lastName || !namePattern.test(lastName)) {
+    } 
+    if (!lastName || !namePattern.test(lastName) || lastName.length < MIN_NAME_LENGTH || lastName.length > MAX_NAME_LENGTH) {
       setLastName('');
       hasError = true;
+    }    
+    // Other validations as before
+    if (!gender || !address || !email || !mobileNo || !age || !date || !deptName || !roleName) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'All fields are required.',
+        showConfirmButton: true,
+      });
     }
     if (hasError) {
       return Swal.fire({
@@ -52,12 +63,12 @@ function Add({ employees, setEmployees, setIsAdding }) {
         showConfirmButton: true,
       });
     }
-    // Other validations as before
-    if (!gender || !address || !email || !mobileNo || !age || !date || !deptName || !roleName) {
+    if (!emailPattern.test(email)) {
+      setEmail('');
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: 'All fields are required.',
+        text: 'Invalid email address format.',
         showConfirmButton: true,
       });
     }
@@ -76,6 +87,15 @@ function Add({ employees, setEmployees, setIsAdding }) {
         icon: 'error',
         title: 'Error!',
         text: 'Mobile number must be 10 digits long.',
+        showConfirmButton: true,
+      });
+    }
+    // Disallow mobile number with all zeros
+    if (/^0+$/.test(mobileNo)) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Mobile number cannot be all zeros.',
         showConfirmButton: true,
       });
     }
@@ -115,7 +135,6 @@ fetch('http://192.168.11.150:4000/employees', {
   .then((response) => response.json())
   .then((data) => {
     // Handle the response from the API, update the employees state, and show success message
-    setEmployees([...employees, data]);
     setIsAdding(false);
     Swal.fire({
       icon: 'success',
@@ -141,7 +160,9 @@ fetch('http://192.168.11.150:4000/employees', {
     const numericValue = e.target.value.replace(/[^0-9]/g, '');
     setMobileNo(numericValue);
   };
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const today = new Date();
+  const threeMonthsAgo = new Date();
+  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3); // Subtract 3 months from the current date
   // Dropdown options for department names and role names
   // const departmentOptions = [
   //   'Admin',
@@ -168,11 +189,11 @@ fetch('http://192.168.11.150:4000/employees', {
           name="firstName"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          placeholder="Enter First Name"
         />
         {firstName && !namePattern.test(firstName) && (
           <span style={{ color: 'red' }}>First name should not contain special characters.</span>
         )}
-
         <label htmlFor="lastName">Last Name</label>
         <input
           id="lastName"
@@ -180,12 +201,15 @@ fetch('http://192.168.11.150:4000/employees', {
           name="lastName"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          placeholder="Enter Last Name"
         />
         {lastName && !namePattern.test(lastName) && (
           <span style={{ color: 'red' }}>Last name should not contain special characters.</span>
         )}
         <div>
           <label>Gender</label>
+          <div className="gender">
+          <div className="female">
           <input
             type="radio"
             name="gender"
@@ -194,6 +218,8 @@ fetch('http://192.168.11.150:4000/employees', {
             onChange={() => setGender('Female')}
           />{' '}
           Female
+          </div>
+          <div>
           <input
             type="radio"
             name="gender"
@@ -203,14 +229,34 @@ fetch('http://192.168.11.150:4000/employees', {
           />{' '}
           Male
         </div>
+        </div>
+        </div>
         <label htmlFor="address">Address</label>
-        <input
-          id="address"
-          type="text"
-          name="address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
+        <textarea
+         id="address"
+         name="address"
+         value={address}
+         onChange={(e) => setAddress(e.target.value)}
+         placeholder="Enter Address"
+         rows={4}
+         cols={50}
+         onKeyPress={(e) => {
+           if (!addressPattern.test(e.key)) {
+           e.preventDefault();
+        }
+       }}
+  onKeyDown={(e) => {
+    if (!addressPattern.test(e.key)) {
+      e.preventDefault();
+    }
+  }}
+  onPaste={(e) => {
+    const pastedText = e.clipboardData.getData('text/plain');
+    if (!addressPattern.test(pastedText)) {
+      e.preventDefault();
+    }
+  }}
+/>
         <label htmlFor="email">Email</label>
         <input
           id="email"
@@ -218,6 +264,7 @@ fetch('http://192.168.11.150:4000/employees', {
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter Email"
         />
         <label htmlFor="mobileNo">Mobile Number</label>
         <input
@@ -226,6 +273,7 @@ fetch('http://192.168.11.150:4000/employees', {
           name="mobileNo"
           value={mobileNo}
           onChange={handleMobileNoChange}
+          placeholder="Enter Mobile Number"
         />
         <label htmlFor="age">Age</label>
         <input
@@ -234,6 +282,7 @@ fetch('http://192.168.11.150:4000/employees', {
           name="age"
           value={age}
           onChange={(e) => setAge(e.target.value)}
+          placeholder="Enter Age"
         />
         <label htmlFor="date">Date of Joining</label>
         <input
@@ -242,7 +291,9 @@ fetch('http://192.168.11.150:4000/employees', {
           name="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          max={today} // Set the max attribute to disable future dates
+          max={format(today, 'yyyy-MM-dd')} // Set the max attribute to the current date
+          min={format(threeMonthsAgo, 'yyyy-MM-dd')} // Set the min attribute to three months ago
+          placeholder="Select Date of Joining"
         />
         <label htmlFor="deptName">Department Name</label>
         <select

@@ -1,0 +1,12 @@
+.gender{
+    display: flex;
+}
+.female{
+    width: 88px;
+}
+#address{
+    min-width: 766px;
+    max-width: 766px;
+    max-height: 90px;
+    min-height: 90px;
+}

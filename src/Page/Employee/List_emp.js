@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Pagination from './Pagination.js';
 import './List_emp.css';
-function List({ handleDelete, handleEdit, handleToggle, filteredUsers, selectedEmployee, setSelectedEmployee }) {
+function List({ handleDelete, handleEdit, handleToggle, filteredUsers, setSelectedEmployee }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Number of items to display per page
+  const itemsPerPage = 6; // Number of items to display per page
   // Function to convert ISO 8601 date to desired format (YYYY-MM-DD)
   const convertDateToDisplayFormat = (isoDate) => {
     const dateObj = new Date(isoDate);
@@ -20,14 +20,14 @@ function List({ handleDelete, handleEdit, handleToggle, filteredUsers, selectedE
       <table className='striped-table'>
         <thead>
           <tr>
-            <th>S.No</th>
-            <th>Emp ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Date of Join</th>
-            <th>Department</th>
-            <th>Role</th>
+             {/* <th className='no'>S.No</th> */}
+            <th className='Empid'>Emp ID</th>
+            <th className='Empfname'>First Name</th>
+            <th className='Emplname'>Last Name</th>
+            <th className='Empemail'>Email</th>
+            <th className='Empdob'>Date of Join</th>
+            <th className='Empdept'>Department</th>
+            <th className='Emprole'>Role</th>
             <th colSpan={3} className='text-center'>
             </th>
           </tr>
@@ -36,14 +36,14 @@ function List({ handleDelete, handleEdit, handleToggle, filteredUsers, selectedE
           {currentEmployees.length > 0 ? (
             currentEmployees.map((employee, i) => (
               <tr key={employee.emp_id}>
-                <td>{indexOfFirstItem + i + 1}</td>
-                <td>{employee.emp_id}</td>
-                <td>{employee.firstname}</td>
-                <td>{employee.lastname}</td>
-                <td>{employee.email}</td>
-                <td>{convertDateToDisplayFormat(employee.date_of_join)}</td>
-                <td>{employee.dept_name}</td>
-                <td>{employee.role_name}</td>
+                {/* <td className='no1' >{indexOfFirstItem + i + 1}</td> */}
+                <td className='Empid' >{employee.emp_id}</td>
+                <td className='Empfname' >{employee.firstname}</td>
+                <td className='Emplname' >{employee.lastname}</td>
+                <td className='Empemail'>{employee.email}</td>
+                <td className='Empdob'>{convertDateToDisplayFormat(employee.date_of_join)}</td>
+                <td className='Empdept'>{employee.dept_name}</td>
+                <td className='Emprole'>{employee.role_name}</td>
                 <td className='text-right'>
                 <button
                   onClick={() => {
