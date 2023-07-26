@@ -1,10 +1,10 @@
 // Role.js
 import React, { useState,useEffect } from 'react';
 import Swal from 'sweetalert2';
-import Header from './Header';
-import List from './List';
-import Add from './Add';
-import Edit from './Edit';
+import Header from './Header.tsx';
+import List from './List.tsx';
+import Add from './Add.tsx';
+import Edit from './Edit.tsx';
 import './Spinner.css'
 import { HashLoader } from 'react-spinners';
 import { employeeData } from '../../data';
