@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -57,5 +58,57 @@ function Header({ setIsAdding, handleRoleFilter }) {
                     react_1.default.createElement("option", { value: "All" }, "All"),
                     react_1.default.createElement("option", { value: "true" }, "Active"),
                     react_1.default.createElement("option", { value: "false" }, "Inactive"))))));
+=======
+import React, { useState } from 'react';
+import './Header.css';
+
+function Header({ setIsAdding, handleRoleFilter }) {
+  const [roleFilter, setRoleFilter] = useState('All');
+
+
+  const handleRoleFilterChange = (e) => {
+    setRoleFilter(e.target.value);
+    handleRoleFilter(e.target.value);
+  };
+
+  const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: '-11px',
+  };
+
+  const selectContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    width: '28%',
+  };
+
+  const selectLabelStyle = {
+    marginRight: '8px',
+    width:'72%',
+  };
+
+  return (
+    <header >
+      <h2>Role Management</h2>
+      <div style={headerStyle}>
+      <div>
+        <button onClick={() => setIsAdding(true)} className='round-button'>Add Button</button>
+      </div>
+    
+      <div style={selectContainerStyle}>
+        <label htmlFor="roleFilter" style={selectLabelStyle}>Filter By Role:</label>
+        <select id="roleFilter" value={roleFilter} onChange={handleRoleFilterChange}>
+          <option value="All">All</option>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
+        </select>
+      </div>
+      {/* Pagination component can be added here */}
+      </div>
+    </header>
+  );
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 }
 exports.default = Header;

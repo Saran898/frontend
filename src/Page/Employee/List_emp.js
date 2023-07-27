@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -76,3 +77,5 @@ function List({ handleDelete, handleEdit, handleToggle, filteredUsers, setSelect
             react_1.default.createElement(Pagination_1.default, { onPageChange: onPageChange, totalCount: filteredUsers.length, siblingCount: 1, currentPage: currentPage, pageSize: itemsPerPage }))));
 }
 exports.default = List;
+=======
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928

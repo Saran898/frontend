@@ -1,5 +1,6 @@
 const employeeData = [
   {
+<<<<<<< HEAD
     "_id": "64b90c28b36ff815678d9269",
     "role_name": "CEO",
     "dept_id": 2001,
@@ -74,12 +75,94 @@ const employeeData = [
 },
  
   // Add other employee data here...
+=======
+    id: 1,
+    firstName: 'Susan',
+    lastName: 'Jordon',
+    email: 'susan@example.com',
+    salary: '95000',
+    date: '2019-04-11'
+  },
+  {
+    id: 2,
+    firstName: 'Adrienne',
+    lastName: 'Doak',
+    email: 'adrienne@example.com',
+    salary: '80000',
+    date: '2019-04-17'
+  },
+  {
+    id: 3,
+    firstName: 'Rolf',
+    lastName: 'Hegdal',
+    email: 'rolf@example.com',
+    salary: '79000',
+    date: '2019-05-01'
+  },
+  {
+    id: 4,
+    firstName: 'Kent',
+    lastName: 'Rosner',
+    email: 'kent@example.com',
+    salary: '56000',
+    date: '2019-05-03'
+  },
+  {
+    id: 5,
+    firstName: 'Arsenio',
+    lastName: 'Grant',
+    email: 'arsenio@example.com',
+    salary: '65000',
+    date: '2019-06-13'
+  },
+  {
+    id: 6,
+    firstName: 'Laurena',
+    lastName: 'Lurie',
+    email: 'laurena@example.com',
+    salary: '120000',
+    date: '2019-07-30'
+  },
+  {
+    id: 7,
+    firstName: 'George',
+    lastName: 'Tallman',
+    email: 'george@example.com',
+    salary: '90000',
+    date: '2019-08-15'
+  },
+  {
+    id: 8,
+    firstName: 'Jesica',
+    lastName: 'Watlington',
+    email: 'jesica@example.com',
+    salary: '60000',
+    date: '2019-10-10'
+  },
+  {
+    id: 9,
+    firstName: 'Matthew',
+    lastName: 'Warren',
+    email: 'matthew@example.com',
+    salary: '71000',
+    date: '2019-10-15'
+  },
+  {
+    id: 10,
+    firstName: 'Lyndsey',
+    lastName: 'Follette',
+    email: 'lyndsey@example.com',
+    salary: '110000',
+    date: '2020-01-15'
+  }
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 ];
 
 export { employeeData };
 
 const employeesData = [
   {
+<<<<<<< HEAD
     _id: '64b7b71f3026579b23cd69a14',
     emp_id: 1,
     firstname: 'saran',
@@ -239,6 +322,14 @@ const employeesData = [
     inserted_date: '2023-07-19T10:12:47.066Z',
     updated_date: '2023-07-19T10:12:47.066Z',
     __v: 0
+=======
+    id: 1,
+    firstName: 'Susan',
+    lastName: 'Jordon',
+    email: 'susan@example.com',
+    salary: '95000',
+    date: '2019-04-11'
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
   },
   // Add other employee data here...
 ];

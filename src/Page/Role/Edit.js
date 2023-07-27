@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -122,3 +123,5 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
                 react_1.default.createElement("input", { style: { marginLeft: '12px' }, className: "muted-button", type: "button", value: "Cancel", onClick: () => setIsEditing(false) })))));
 }
 exports.default = Edit;
+=======
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928

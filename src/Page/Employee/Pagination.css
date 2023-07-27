@@ -1,7 +1,12 @@
 .pagination-container {
     display: flex;
     list-style-type: none;
+<<<<<<< HEAD
 .pagination-item {
+=======
+  
+    .pagination-item {
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
       padding: 0 12px;
       height: 32px;
       text-align: center;
@@ -24,9 +29,17 @@
         background-color: rgba(0, 0, 0, 0.04);
         cursor: pointer;
       }
+<<<<<<< HEAD
       &.selected {
         background-color: rgba(0, 0, 0, 0.08);
       }
+=======
+  
+      &.selected {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+  
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
       .arrow {
         &::before {
           position: relative;
@@ -39,26 +52,51 @@
           border-right: 0.12em solid rgba(0, 0, 0, 0.87);
           border-top: 0.12em solid rgba(0, 0, 0, 0.87);
         }
+<<<<<<< HEAD
         &.left {
           transform: rotate(-135deg) translate(-50%);
         } 
+=======
+  
+        &.left {
+          transform: rotate(-135deg) translate(-50%);
+        }
+  
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
         &.right {
           transform: rotate(45deg);
         }
       }
+<<<<<<< HEAD
       &.disabled {
         pointer-events: none;
+=======
+  
+      &.disabled {
+        pointer-events: none;
+  
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
         .arrow::before {
           border-right: 0.12em solid rgba(0, 0, 0, 0.43);
           border-top: 0.12em solid rgba(0, 0, 0, 0.43);
         }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
         &:hover {
           background-color: transparent;
           cursor: default;
         }
       }
+<<<<<<< HEAD
   }
   }
+=======
+    }
+  }
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
   .pagination {
     /* Your pagination container styles */
     display: flex;

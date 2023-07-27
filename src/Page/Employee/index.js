@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+<<<<<<< HEAD
 import Header from './Header_emp.tsx';
 import List from './List_emp.tsx';
 import Add from './Add_emp.tsx';
@@ -8,6 +9,16 @@ import './Spinner.css'
 import { HashLoader } from 'react-spinners';
 import axios from 'axios';
 // import { employeesData } from '../../data';
+=======
+
+import Header from './Header_emp';
+import List from './List_emp';
+import Add from './Add_emp';
+import Edit from './Edit_emp';
+
+import { employeesData } from '../../data';
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 function Employee() {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -16,6 +27,7 @@ function Employee() {
   const [filteredUsers, setFilteredUsers] = useState([]);
   // const [loading, setLoading] = useState(false); // This is the only declaration of 'loading' needed
 
+<<<<<<< HEAD
   useEffect(() => {
     // Fetch employees from the backend API using Axios
     setLoading(true);
@@ -102,6 +114,12 @@ function Employee() {
     const filtered = employees.filter((employee) => {
       return employee.role_name.toLowerCase().includes(searchValue.toLowerCase());
     });
+=======
+    const [employees, setEmployees] = useState(employeesData);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [isAdding, setIsAdding] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 
     // Update the employees list with the filtered results
     setFilteredUsers(filtered);

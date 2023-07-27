@@ -1,8 +1,16 @@
 // Pagination.js
+<<<<<<< HEAD
+=======
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 import React from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from './usePagination';
 import './Pagination.css'; // You may update the path to your pagination style file.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 const Pagination = (props) => {
   const {
     onPageChange,
@@ -12,12 +20,17 @@ const Pagination = (props) => {
     pageSize,
     className,
   } = props;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
   const paginationRange = usePagination({
     currentPage,
     totalCount,
     siblingCount,
     pageSize,
   });
+<<<<<<< HEAD
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
@@ -27,6 +40,21 @@ const Pagination = (props) => {
   const onPrevious = () => {
     onPageChange(currentPage - 1);
   };
+=======
+
+  if (currentPage === 0 || paginationRange.length < 2) {
+    return null;
+  }
+
+  const onNext = () => {
+    onPageChange(currentPage + 1);
+  };
+
+  const onPrevious = () => {
+    onPageChange(currentPage - 1);
+  };
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
   let lastPage = paginationRange[paginationRange.length - 1];
   return (
     <ul className={classnames('pagination-container', { [className]: className })}>
@@ -42,6 +70,10 @@ const Pagination = (props) => {
         if (pageNumber === DOTS) {
           return <li className="pagination-item dots">&#8230;</li>;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
         return (
           <li
             key={pageNumber}
@@ -65,4 +97,8 @@ const Pagination = (props) => {
     </ul>
   );
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 export default Pagination;

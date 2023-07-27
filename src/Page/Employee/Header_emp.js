@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -81,3 +82,5 @@ function Header({ setIsAdding, filterBySearch, setFilteredUsers }) {
                 react_1.default.createElement("img", { src: searchicon_png_1.default, alt: "Search", style: searchIconStyle })))));
 }
 exports.default = Header;
+=======
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928

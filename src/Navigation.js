@@ -13,7 +13,7 @@ const Navigation = () => {
         <nav className="left-side-nav">
           <ul>
             <li>
-              <NavLink to="/" className="active">
+              <NavLink exact to="/" activeClassName="active">
               <FontAwesomeIcon icon={faUser} className="sidebar-icon" />
                 Role
               </NavLink>

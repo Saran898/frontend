@@ -2,7 +2,11 @@
     display: flex;
     list-style-type: none;
   
+<<<<<<< HEAD
 .pagination-item {
+=======
+    .pagination-item {
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
       padding: 0 12px;
       height: 32px;
       text-align: center;
@@ -50,7 +54,11 @@
         &.right {
           transform: rotate(45deg);
         }
+<<<<<<< HEAD
   }
+=======
+      }
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
   
       &.disabled {
         pointer-events: none;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Role.js
 import React, { useState,useEffect } from 'react';
 import Swal from 'sweetalert2';
@@ -100,5 +101,7 @@ function Role(handleToggle) {
         </div>
     )
 }
+=======
+>>>>>>> 630207be6bf5271ab274ac6d7c1a82b2014fa928
 
 export default Role;
