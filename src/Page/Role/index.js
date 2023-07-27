@@ -100,5 +100,4 @@ function Role(handleToggle) {
         </div>
     )
 }
-
 export default Role;

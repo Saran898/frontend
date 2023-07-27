@@ -28,6 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const Pagination_1 = __importDefault(require("./Pagination"));
+require("./List.css");
 function List({ handleUpdate, roleFilter, setSelectedEmployee }) {
     const [employees, setEmployees] = (0, react_1.useState)([]);
     const [activeStatus, setActiveStatus] = (0, react_1.useState)({});
@@ -82,45 +83,29 @@ function List({ handleUpdate, roleFilter, setSelectedEmployee }) {
     const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
     const filteredEmployees = roleFilter === 'All' ? employees : employees.filter((employee) => employee.is_active_flag === (roleFilter === 'true'));
     const currentEmployees = filteredEmployees.slice(indexOfFirstItem, indexOfLastItem);
-    return (<div className='contain-table'>
-      <table className='striped-table'>
-        <thead>
-          <tr>
-            <th className='No'>No.</th>
-            <th className='Roleid'>Role ID</th>
-            <th className='Department'>Department</th>
-            <th className='Role'>Role</th>
-            <th colSpan={2} className='text-center'></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentEmployees.length > 0 ? (currentEmployees.map((employee, i) => (<tr key={employee.role_id}>
-                <td className='No1'>{indexOfFirstItem + i + 1}</td>
-                <td className='emproleid'>{employee.role_id}</td>
-                <td className='empdeptname'>{employee.dept_name}</td>
-                <td className='emprolename'>{employee.role_name}</td>
-                <td className='text-right'>
-                  <button onClick={() => {
-                handleUpdate(employee.role_id);
-                setSelectedEmployee(employee); // Set the selected employee in the Employee component
-            }} className='button muted-button' title='Edit Role'>
-                    Edit
-                  </button>
-                </td>
-                <td className='text-left'>
-                  <button className={`button ${activeStatus[employee.role_id] ? 'active-button' : 'muted-button'}`} onClick={() => handleToggle(employee.role_id)} title={activeStatus[employee.role_id] ? 'Active Role' : 'Inactive Role'}>
-                    {activeStatus[employee.role_id] ? 'Active' : 'Inactive'}
-                  </button>
-                </td>
-              </tr>))) : (<tr>
-              <td colSpan={9}>No Employees</td>
-            </tr>)}
-        </tbody>
-      </table>
-      {/* Pagination */}
-      <div className='pagination'>
-        <Pagination_1.default onPageChange={onPageChange} totalCount={filteredEmployees.length} siblingCount={1} currentPage={currentPage} pageSize={itemsPerPage}/>
-      </div>
-    </div>);
+    return (react_1.default.createElement("div", { className: 'contain-table' },
+        react_1.default.createElement("table", { className: 'striped-table' },
+            react_1.default.createElement("thead", null,
+                react_1.default.createElement("tr", null,
+                    react_1.default.createElement("th", { className: 'No' }, "No."),
+                    react_1.default.createElement("th", { className: 'Roleid' }, "Role ID"),
+                    react_1.default.createElement("th", { className: 'Department' }, "Department"),
+                    react_1.default.createElement("th", { className: 'Role' }, "Role"),
+                    react_1.default.createElement("th", { colSpan: 2, className: 'text-center' }))),
+            react_1.default.createElement("tbody", null, currentEmployees.length > 0 ? (currentEmployees.map((employee, i) => (react_1.default.createElement("tr", { key: employee.role_id },
+                react_1.default.createElement("td", { className: 'No1' }, indexOfFirstItem + i + 1),
+                react_1.default.createElement("td", { className: 'emproleid' }, employee.role_id),
+                react_1.default.createElement("td", { className: 'empdeptname' }, employee.dept_name),
+                react_1.default.createElement("td", { className: 'emprolename' }, employee.role_name),
+                react_1.default.createElement("td", { className: 'text-right' },
+                    react_1.default.createElement("button", { onClick: () => {
+                            handleUpdate(employee.role_id);
+                            setSelectedEmployee(employee); // Set the selected employee in the Employee component
+                        }, className: 'button muted-button', title: 'Edit Role' }, "Edit")),
+                react_1.default.createElement("td", { className: 'text-left' },
+                    react_1.default.createElement("button", { className: `button ${activeStatus[employee.role_id] ? 'active-button' : 'muted-button'}`, onClick: () => handleToggle(employee.role_id), title: activeStatus[employee.role_id] ? 'Active Role' : 'Inactive Role' }, activeStatus[employee.role_id] ? 'Active' : 'Inactive')))))) : (react_1.default.createElement("tr", null,
+                react_1.default.createElement("td", { colSpan: 9 }, "No Employees"))))),
+        react_1.default.createElement("div", { className: 'pagination' },
+            react_1.default.createElement(Pagination_1.default, { onPageChange: onPageChange, totalCount: filteredEmployees.length, siblingCount: 1, currentPage: currentPage, pageSize: itemsPerPage }))));
 }
 exports.default = List;

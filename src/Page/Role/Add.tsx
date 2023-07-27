@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 interface Role {
   dept_name: string;
   role_name: string;
@@ -20,9 +21,9 @@ function Add({ employees, setEmployees, setIsAdding }: AddProps) {
   const [deptName, setDeptName] = useState<string>('');
   const [departments, setDepartments] = useState<string[]>([]);
   useEffect(() => {
-    fetch('http://192.168.11.150:4000/roles')
-      .then((response) => response.json())
-      .then((data: Role[]) => {
+    axios.get('http://192.168.11.150:4000/roles')
+      .then((response) => {
+        const data: Role[] = response.data;
         const uniqueDepartments = [...new Set(data.map((role) => role.dept_name))];
         setDepartments(uniqueDepartments);
       })
@@ -42,42 +43,36 @@ function Add({ employees, setEmployees, setIsAdding }: AddProps) {
       dept_name: deptName,
       role_name: roleName,
     };
-    fetch('http://192.168.11.150:4000/roles', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newRole),
-    })
-      .then((response) => response.json())
-      .then((data: Role) => {
-        const id = employees.length + 1;
-        const newEmployee: Employee = {
-          id,
-          deptName: data.dept_name,
-          roleName: data.role_name,
-          inserted_by_name: 'Naga',
-        };
-        setEmployees([...employees, newEmployee]);
-        setIsAdding(false);
-        Swal.fire({
-          icon: 'success',
-          title: 'Added!',
-          text: `${roleName}'s data has been Added.`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        console.error('Error adding new employee role:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: 'Failed to add new employee role.',
-          showConfirmButton: true,
-        });
+    axios.post('http://192.168.11.150:4000/roles', newRole)
+    .then((response) => {
+      const data: Role = response.data;
+      const id = employees.length + 1;
+      const newEmployee: Employee = {
+        id,
+        deptName: data.dept_name,
+        roleName: data.role_name,
+        inserted_by_name: 'Naga',
+      };
+      setEmployees([...employees, newEmployee]);
+      setIsAdding(false);
+      Swal.fire({
+        icon: 'success',
+        title: 'Added!',
+        text: `${roleName}'s data has been Added.`,
+        showConfirmButton: false,
+        timer: 1500,
       });
-  };
+    })
+    .catch((error) => {
+      console.error('Error adding new employee role:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to add new employee role.',
+        showConfirmButton: true,
+      });
+    });
+};
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>

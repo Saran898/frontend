@@ -28,37 +28,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const sweetalert2_1 = __importDefault(require("sweetalert2"));
+const axios_1 = __importDefault(require("axios"));
+const initialState = {
+    departments: [],
+    roleName: '',
+    deptName: '',
+};
+function reducer(state, action) {
+    switch (action.type) {
+        case 'SET_DEPARTMENTS':
+            return Object.assign(Object.assign({}, state), { departments: action.payload });
+        case 'SET_ROLE_NAME':
+            return Object.assign(Object.assign({}, state), { roleName: action.payload });
+        case 'SET_DEPT_NAME':
+            return Object.assign(Object.assign({}, state), { deptName: action.payload });
+        default:
+            return state;
+    }
+}
 function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
-    const id = selectedEmployee.role_id; // Use role_id from the selectedEmployee object
+    const [state, dispatch] = (0, react_1.useReducer)(reducer, initialState);
+    const initialSelectedEmployeeRef = (0, react_1.useRef)(selectedEmployee);
     (0, react_1.useEffect)(() => {
-        fetch('http://192.168.11.150:4000/roles')
-            .then((response) => response.json())
-            .then((data) => {
+        const initialSelectedEmployee = initialSelectedEmployeeRef.current;
+        axios_1.default
+            .get('http://192.168.11.150:4000/roles')
+            .then((response) => {
+            const data = response.data;
             // Set the data from the API to the state
             const uniqueDepartments = [...new Set(data.map((role) => role.dept_name))];
             // Set the unique department names to the state
-            setDepartments(uniqueDepartments);
+            dispatch({ type: 'SET_DEPARTMENTS', payload: uniqueDepartments });
             // Set the selectedEmployee data to initialize the state
-            setRoleName(selectedEmployee.role_name);
-            setDeptName(selectedEmployee.dept_name);
+            dispatch({ type: 'SET_ROLE_NAME', payload: initialSelectedEmployee.role_name });
+            dispatch({ type: 'SET_DEPT_NAME', payload: initialSelectedEmployee.dept_name });
         })
             .catch((error) => console.error('Error fetching data:', error));
-    }, [selectedEmployee]);
-    (0, react_1.useEffect)(() => {
-        fetch(`http://192.168.11.150:4000/roles/${id}`)
-            .then((response) => response.json())
-            .then((data) => {
-            // Set the data from the API to the state
-            setRoleName(data.role_name);
-            setDeptName(data.dept_name);
-        })
-            .catch((error) => console.error('Error fetching data:', error));
-    }, [id]);
-    const [departments, setDepartments] = (0, react_1.useState)([]);
-    const [roleName, setRoleName] = (0, react_1.useState)('');
-    const [deptName, setDeptName] = (0, react_1.useState)('');
+    }, []);
     const handleEdit = (e) => {
         e.preventDefault();
+        const { roleName, deptName } = state;
         if (!roleName || !deptName) {
             return sweetalert2_1.default.fire({
                 icon: 'error',
@@ -71,20 +80,18 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
             role_name: roleName,
             dept_name: deptName,
         };
-        // Send the updated role data to the server using fetch
-        fetch(`http://192.168.11.150:4000/roles/${id}`, {
-            method: 'PUT',
+        // Send the updated role data to the server using axios
+        axios_1.default
+            .put(`http://192.168.11.150:4000/roles/${selectedEmployee.role_id}`, updatedRole, {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updatedRole),
         })
-            .then((response) => response.json())
-            .then((data) => {
+            .then((response) => {
             // Assuming you have a function to update the selectedEmployee in the parent component
             setEmployees((prevEmployees) => {
                 // Find the selected employee and update it in the employees array
-                const updatedEmployees = prevEmployees.map((employee) => employee.role_id === id ? Object.assign(Object.assign({}, employee), updatedRole) : employee);
+                const updatedEmployees = prevEmployees.map((employee) => employee.role_id === selectedEmployee.role_id ? Object.assign(Object.assign({}, employee), updatedRole) : employee);
                 return updatedEmployees;
             });
             // Close the editing mode
@@ -108,24 +115,18 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }) {
             });
         });
     };
-    return (<div className="small-container">
-      <form onSubmit={handleEdit}>
-        <h1>Edit Role</h1>
-        <label htmlFor="firstName">Department</label>
-        <select id="deptName" name="deptName" value={deptName} onChange={(e) => setDeptName(e.target.value)}>
-          <option value="">Select Department</option>
-
-          {departments.map((department) => (<option key={department} value={department}>
-              {department}
-            </option>))}
-        </select>
-        <label htmlFor="roleName">Role</label>
-        <input id="roleName" type="text" name="roleName" value={roleName} onChange={(e) => setRoleName(e.target.value)}/>
-        <div style={{ marginTop: '30px' }}>
-          <input type="submit" value="Update"/>
-          <input style={{ marginLeft: '12px' }} className="muted-button" type="button" value="Cancel" onClick={() => setIsEditing(false)}/>
-        </div>
-      </form>
-    </div>);
+    const { departments, roleName, deptName } = state;
+    return (react_1.default.createElement("div", { className: "small-container" },
+        react_1.default.createElement("form", { onSubmit: handleEdit },
+            react_1.default.createElement("h1", null, "Edit Role"),
+            react_1.default.createElement("label", { htmlFor: "firstName" }, "Department"),
+            react_1.default.createElement("select", { id: "deptName", name: "deptName", value: deptName, onChange: (e) => dispatch({ type: 'SET_DEPT_NAME', payload: e.target.value }) },
+                react_1.default.createElement("option", { value: "" }, "Select Department"),
+                departments.map((department) => (react_1.default.createElement("option", { key: department, value: department }, department)))),
+            react_1.default.createElement("label", { htmlFor: "roleName" }, "Role"),
+            react_1.default.createElement("input", { id: "roleName", type: "text", name: "roleName", value: roleName, onChange: (e) => dispatch({ type: 'SET_ROLE_NAME', payload: e.target.value }) }),
+            react_1.default.createElement("div", { style: { marginTop: '30px' } },
+                react_1.default.createElement("input", { type: "submit", value: "Update" }),
+                react_1.default.createElement("input", { style: { marginLeft: '12px' }, className: "muted-button", type: "button", value: "Cancel", onClick: () => setIsEditing(false) })))));
 }
 exports.default = Edit;

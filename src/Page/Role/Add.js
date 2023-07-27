@@ -28,14 +28,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const sweetalert2_1 = __importDefault(require("sweetalert2"));
+const axios_1 = __importDefault(require("axios"));
 function Add({ employees, setEmployees, setIsAdding }) {
     const [roleName, setRoleName] = (0, react_1.useState)('');
     const [deptName, setDeptName] = (0, react_1.useState)('');
     const [departments, setDepartments] = (0, react_1.useState)([]);
     (0, react_1.useEffect)(() => {
-        fetch('http://192.168.11.150:4000/roles')
-            .then((response) => response.json())
-            .then((data) => {
+        axios_1.default.get('http://192.168.11.150:4000/roles')
+            .then((response) => {
+            const data = response.data;
             const uniqueDepartments = [...new Set(data.map((role) => role.dept_name))];
             setDepartments(uniqueDepartments);
         })
@@ -55,15 +56,9 @@ function Add({ employees, setEmployees, setIsAdding }) {
             dept_name: deptName,
             role_name: roleName,
         };
-        fetch('http://192.168.11.150:4000/roles', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newRole),
-        })
-            .then((response) => response.json())
-            .then((data) => {
+        axios_1.default.post('http://192.168.11.150:4000/roles', newRole)
+            .then((response) => {
+            const data = response.data;
             const id = employees.length + 1;
             const newEmployee = {
                 id,
@@ -91,23 +86,17 @@ function Add({ employees, setEmployees, setIsAdding }) {
             });
         });
     };
-    return (<div className="small-container">
-      <form onSubmit={handleAdd}>
-        <h1>Add Role</h1>
-        <label htmlFor="firstName">Department</label>
-        <select id="deptName" name="deptName" value={deptName} onChange={(e) => setDeptName(e.target.value)}>
-          <option value="">Select Department</option>
-          {departments.map((role) => (<option key={role} value={role}>
-              {role}
-            </option>))}
-        </select>
-        <label htmlFor="roleName">Role</label>
-        <input id="roleName" type="text" name="roleName" value={roleName} onChange={(e) => setRoleName(e.target.value)}/>
-        <div style={{ marginTop: '30px' }}>
-          <input type="submit" value="Add"/>
-          <input style={{ marginLeft: '12px' }} className="muted-button" type="button" value="Cancel" onClick={() => setIsAdding(false)}/>
-        </div>
-      </form>
-    </div>);
+    return (react_1.default.createElement("div", { className: "small-container" },
+        react_1.default.createElement("form", { onSubmit: handleAdd },
+            react_1.default.createElement("h1", null, "Add Role"),
+            react_1.default.createElement("label", { htmlFor: "firstName" }, "Department"),
+            react_1.default.createElement("select", { id: "deptName", name: "deptName", value: deptName, onChange: (e) => setDeptName(e.target.value) },
+                react_1.default.createElement("option", { value: "" }, "Select Department"),
+                departments.map((role) => (react_1.default.createElement("option", { key: role, value: role }, role)))),
+            react_1.default.createElement("label", { htmlFor: "roleName" }, "Role"),
+            react_1.default.createElement("input", { id: "roleName", type: "text", name: "roleName", value: roleName, onChange: (e) => setRoleName(e.target.value) }),
+            react_1.default.createElement("div", { style: { marginTop: '30px' } },
+                react_1.default.createElement("input", { type: "submit", value: "Add" }),
+                react_1.default.createElement("input", { style: { marginLeft: '12px' }, className: "muted-button", type: "button", value: "Cancel", onClick: () => setIsAdding(false) })))));
 }
 exports.default = Add;
