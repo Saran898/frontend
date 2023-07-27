@@ -43,7 +43,13 @@ function Add({ employees, setEmployees, setIsAdding }: AddProps) {
       dept_name: deptName,
       role_name: roleName,
     };
-    axios.post('http://192.168.11.150:4000/roles', newRole)
+    const config = { // Moved the config object outside the component function
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      withCredentials: false,
+    };
+    axios.post('http://192.168.11.150:4000/roles', newRole, config)
     .then((response) => {
       const data: Role = response.data;
       const id = employees.length + 1;

@@ -29,6 +29,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const sweetalert2_1 = __importDefault(require("sweetalert2"));
 const axios_1 = __importDefault(require("axios"));
+// Configuration object with headers and other options
+const config = {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    withCredentials: false,
+};
 function Add({ employees, setEmployees, setIsAdding }) {
     const [roleName, setRoleName] = (0, react_1.useState)('');
     const [deptName, setDeptName] = (0, react_1.useState)('');
@@ -56,7 +63,7 @@ function Add({ employees, setEmployees, setIsAdding }) {
             dept_name: deptName,
             role_name: roleName,
         };
-        axios_1.default.post('http://192.168.11.150:4000/roles', newRole)
+        axios_1.default.post('http://192.168.11.150:4000/roles', newRole, config)
             .then((response) => {
             const data = response.data;
             const id = employees.length + 1;
