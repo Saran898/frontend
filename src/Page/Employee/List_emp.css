@@ -1,0 +1,131 @@
+.striped-table{
+  font-size: 15px;
+      line-height: 19px;
+      margin-top: 12px;
+  } 
+  th, td {
+      padding: 0.2rem;
+  }
+  .button, a.button, button, [type='submit'], [type='reset'], [type='button'] {
+  margin: 2px;
+  }
+  .button,
+  a.button,
+  button,
+  [type='submit'],
+  [type='reset'],
+  [type='button'] {
+    display: inline-block;
+    border: 1px solid #404e67;
+    border-radius: 4px;
+    background: #404e67;
+    color: #ffffff;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
+      Arial, sans-serif;
+    font-size: 1rem;
+    text-transform: none;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+    padding: 10px;
+  }
+  .button:hover,
+  a.button:hover,
+  button:hover,
+  [type='submit']:hover,
+  [type='reset']:hover,
+  [type='button']:hover {
+    border: 1px solid grey;
+    background: grey;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  .button:focus,
+  .button:active,
+  a.button:focus,
+  a.button:active,
+  button:focus,
+  button:active,
+  [type='submit']:focus,
+  [type='submit']:active,
+  [type='reset']:focus,
+  [type='reset']:active,
+  [type='button']:focus,
+  [type='button']:active {
+    border: 1px solid #404e67;
+    background: #404e67;
+    color: #ffffff;
+    text-decoration: none;
+  }
+ .button::-moz-focus-inner,
+  a.button::-moz-focus-inner,
+  button::-moz-focus-inner,
+  [type='submit']::-moz-focus-inner,
+  [type='reset']::-moz-focus-inner,
+  [type='button']::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  } 
+  .muted-button,
+  a.muted-button {
+    background: transparent;
+    border: 1px solid #cdcdcd;
+    color: #4e4e4e;
+    padding: 10px;
+  }  
+  .muted-button:hover,
+  .muted-button:focus,
+  .muted-button:active,
+  a.muted-button:hover,
+  a.muted-button:focus,
+  a.muted-button:active {
+    color: #4e4e4e;
+    border: 1px solid #818181;
+    background: transparent;
+  } 
+  .no,.no1{
+    max-width: 40px !important;
+    min-width: 40px !important
+}
+.Empid{
+  max-width: 65px !important;
+    min-width: 65px !important;
+}
+.Empfname{
+    max-width: 95px !important;
+    min-width: 95px !important;
+}
+.Emplname{
+  max-width: 131px !important;
+  min-width: 131px !important;
+}
+.Empemail{
+max-width: 265px !important;
+min-width: 265px !important;
+}
+.Empdob{
+max-width: 100px !important;
+min-width: 100px !important;
+}
+.Empdept{
+max-width: 100px !important;
+min-width: 100px !important;
+}
+.Emprole{
+max-width: 131px !important;
+min-width: 131px !important;
+}
+.text-center{
+max-width: 100px !important;
+min-width: 100px !important;
+}
+.button muted-button{
+width: 90px ;
+}
+.text-left{
+max-width: 90px !important;
+min-width: 90px !important;
+}
