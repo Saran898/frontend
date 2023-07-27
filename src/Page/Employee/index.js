@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import Header from './Header_emp';
-import List from './List_emp';
-import Add from './Add_emp';
-import Edit from './Edit_emp';
+import Header from './Header_emp.tsx';
+import List from './List_emp.tsx';
+import Add from './Add_emp.tsx';
+import Edit from './Edit_emp.tsx';
 import './Spinner.css'
 import { HashLoader } from 'react-spinners';
+import axios from 'axios';
 // import { employeesData } from '../../data';
 function Employee() {
   const [employees, setEmployees] = useState([]);
@@ -13,15 +14,18 @@ function Employee() {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  // const [loading, setLoading] = useState(false); // This is the only declaration of 'loading' needed
+
   useEffect(() => {
-    // Fetch employees from the backend API here
-    fetch('http://192.168.11.150:4000/employees') // Replace this with your actual backend route
-      .then((response) => response.json())
-      .then((data) => {
-        setEmployees(data);
-        setFilteredUsers(data);
+    // Fetch employees from the backend API using Axios
+    setLoading(true);
+    axios.get('http://192.168.11.150:4000/employees') // Replace this with your actual backend route
+      .then((response) => {
+        setEmployees(response.data);
+        setFilteredUsers(response.data);
       })
-      .catch((error) => console.error('Error fetching data:', error));
+      .catch((error) => console.error('Error fetching data:', error))
+      .finally(() => setLoading(false));
   }, []);
   const handleEdit = (emp_id) => {
     const selectedEmployee = filteredUsers.find((employee) => employee.emp_id === emp_id);

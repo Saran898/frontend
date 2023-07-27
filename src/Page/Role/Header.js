@@ -46,27 +46,16 @@ function Header({ setIsAdding, handleRoleFilter }) {
         marginRight: '8px',
         width: '72%',
     };
-    return (<header>
-      <h1>Role Management</h1>
-      <div style={headerStyle}>
-        <div>
-          <button onClick={() => setIsAdding(true)} className="round-button" title="Add Role">
-            Add Button
-          </button>
-        </div>
-
-        <div style={selectContainerStyle}>
-          <label htmlFor="roleFilter" style={selectLabelStyle}>
-            Filter By Role:
-          </label>
-          <select id="roleFilter" value={roleFilter} onChange={handleRoleFilterChange}>
-            <option value="All">All</option>
-            <option value="true">Active</option>
-            <option value="false">Inactive</option>
-          </select>
-        </div>
-        {/* Pagination component can be added here */}
-      </div>
-    </header>);
+    return (react_1.default.createElement("header", null,
+        react_1.default.createElement("h1", null, "Role Management"),
+        react_1.default.createElement("div", { style: headerStyle },
+            react_1.default.createElement("div", null,
+                react_1.default.createElement("button", { onClick: () => setIsAdding(true), className: "round-button", title: "Add Role" }, "Add Button")),
+            react_1.default.createElement("div", { style: selectContainerStyle },
+                react_1.default.createElement("label", { htmlFor: "roleFilter", style: selectLabelStyle }, "Filter By Role:"),
+                react_1.default.createElement("select", { id: "roleFilter", value: roleFilter, onChange: handleRoleFilterChange },
+                    react_1.default.createElement("option", { value: "All" }, "All"),
+                    react_1.default.createElement("option", { value: "true" }, "Active"),
+                    react_1.default.createElement("option", { value: "false" }, "Inactive"))))));
 }
 exports.default = Header;

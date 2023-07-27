@@ -1,58 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import Swal from 'sweetalert2';
-
+import axios from 'axios';
 interface Role {
   dept_name: string;
   role_name: string;
 }
-
 interface Employee {
   role_id: number;
   dept_name: string;
   role_name: string;
 }
-
 interface EditProps {
   selectedEmployee: Employee;
   setEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
+interface State {
+  departments: string[];
+  roleName: string;
+  deptName: string;
+}
+type Action =
+  | { type: 'SET_DEPARTMENTS'; payload: string[] }
+  | { type: 'SET_ROLE_NAME'; payload: string }
+  | { type: 'SET_DEPT_NAME'; payload: string };
+const initialState: State = {
+  departments: [],
+  roleName: '',
+  deptName: '',
+};
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'SET_DEPARTMENTS':
+      return { ...state, departments: action.payload };
+    case 'SET_ROLE_NAME':
+      return { ...state, roleName: action.payload };
+    case 'SET_DEPT_NAME':
+      return { ...state, deptName: action.payload };
+    default:
+      return state;
+  }
+}
 function Edit({ selectedEmployee, setEmployees, setIsEditing }: EditProps) {
-  const id = selectedEmployee.role_id; // Use role_id from the selectedEmployee object
-
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const initialSelectedEmployeeRef = useRef(selectedEmployee);
   useEffect(() => {
-    fetch('http://192.168.11.150:4000/roles')
-      .then((response) => response.json())
-      .then((data: Role[]) => {
+    const initialSelectedEmployee = initialSelectedEmployeeRef.current;
+    axios
+      .get('http://192.168.11.150:4000/roles')
+      .then((response) => {
+        const data: Role[] = response.data;
         // Set the data from the API to the state
         const uniqueDepartments = [...new Set(data.map((role) => role.dept_name))];
         // Set the unique department names to the state
-        setDepartments(uniqueDepartments);
+        dispatch({ type: 'SET_DEPARTMENTS', payload: uniqueDepartments });
         // Set the selectedEmployee data to initialize the state
-        setRoleName(selectedEmployee.role_name);
-        setDeptName(selectedEmployee.dept_name);
+        dispatch({ type: 'SET_ROLE_NAME', payload: initialSelectedEmployee.role_name });
+        dispatch({ type: 'SET_DEPT_NAME', payload: initialSelectedEmployee.dept_name });
       })
       .catch((error) => console.error('Error fetching data:', error));
-  }, [selectedEmployee]);
-
-  useEffect(() => {
-    fetch(`http://192.168.11.150:4000/roles/${id}`)
-      .then((response) => response.json())
-      .then((data: Role) => {
-        // Set the data from the API to the state
-        setRoleName(data.role_name);
-        setDeptName(data.dept_name);
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, [id]);
-
-  const [departments, setDepartments] = useState<string[]>([]);
-  const [roleName, setRoleName] = useState<string>('');
-  const [deptName, setDeptName] = useState<string>('');
-
+  }, []);
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { roleName, deptName } = state;
     if (!roleName || !deptName) {
       return Swal.fire({
         icon: 'error',
@@ -65,29 +75,24 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }: EditProps) {
       role_name: roleName,
       dept_name: deptName,
     };
-
-    // Send the updated role data to the server using fetch
-    fetch(`http://192.168.11.150:4000/roles/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedRole),
-    })
-      .then((response) => response.json())
-      .then((data: Role) => {
+    // Send the updated role data to the server using axios
+    axios
+      .put(`http://192.168.11.150:4000/roles/${selectedEmployee.role_id}`, updatedRole, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
         // Assuming you have a function to update the selectedEmployee in the parent component
         setEmployees((prevEmployees) => {
           // Find the selected employee and update it in the employees array
           const updatedEmployees = prevEmployees.map((employee) =>
-            employee.role_id === id ? { ...employee, ...updatedRole } : employee
+            employee.role_id === selectedEmployee.role_id ? { ...employee, ...updatedRole } : employee
           );
           return updatedEmployees;
         });
-
         // Close the editing mode
         setIsEditing(false);
-
         // Show success message
         Swal.fire({
           icon: 'success',
@@ -107,7 +112,7 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }: EditProps) {
         });
       });
   };
-
+  const { departments, roleName, deptName } = state;
   return (
     <div className="small-container">
       <form onSubmit={handleEdit}>
@@ -117,10 +122,9 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }: EditProps) {
           id="deptName"
           name="deptName"
           value={deptName}
-          onChange={(e) => setDeptName(e.target.value)}
+          onChange={(e) => dispatch({ type: 'SET_DEPT_NAME', payload: e.target.value })}
         >
           <option value="">Select Department</option>
-
           {departments.map((department) => (
             <option key={department} value={department}>
               {department}
@@ -133,7 +137,7 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }: EditProps) {
           type="text"
           name="roleName"
           value={roleName}
-          onChange={(e) => setRoleName(e.target.value)}
+          onChange={(e) => dispatch({ type: 'SET_ROLE_NAME', payload: e.target.value })}
         />
         <div style={{ marginTop: '30px' }}>
           <input type="submit" value="Update" />
@@ -149,5 +153,4 @@ function Edit({ selectedEmployee, setEmployees, setIsEditing }: EditProps) {
     </div>
   );
 }
-
 export default Edit;

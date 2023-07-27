@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
+import './List.css'
 interface Employee {
   role_id: number;
   dept_name: string;
@@ -121,7 +122,6 @@ function List({ handleUpdate, roleFilter, setSelectedEmployee }: ListProps) {
           )}
         </tbody>
       </table>
-      {/* Pagination */}
       <div className='pagination'>
         <Pagination
           onPageChange={onPageChange}
